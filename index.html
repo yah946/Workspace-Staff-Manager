@@ -10,7 +10,7 @@
     <meta name="keywords" content="" />
     <meta name="author" content="Mohamed Seh" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Css -->
+    <!-- FrameWork Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- JavaScript's file -->
     <script defer src="./assets/javaScript/main.js"></script>
@@ -31,14 +31,98 @@
     <!-- Title -->
     <title>Workspace Staff Manager</title>
   </head>
-  <body class="font-[Space_Grotesk]">
+  <body class="font-[Space_Grotesk] bg-[#E6EBFF] selection:bg-red-500 selection:text-white">
     <!-- Side Bar -->
-    <div id="container" class="h-full w-80 bg-red-500">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
+    <div id="side-bar" class="h-screen w-80 bg-[#B8C6FF] flex justify-center">
+      <div id="container" style="scrollbar-width: thin;scrollbar-color: #0000AA #B8C6FF;" class="w-72 mt-2 h-[450px] overflow-y-auto flex-col">
+        <!-- Examples -->
+        <div id="profile" class="flex justify-evenly bg-[#0000AA] p-3 w-64 rounded-lg m-2 text-white">
+          <div>
+            <img src="./assets/images/default.png" class="w-12 h-12 rounded-[50%]">
+          </div>
+          <div>
+            <h2 class="font-bold">Mohamed Sehrane</h2>
+            <p class="text-[#B8C6FF]">Security Guards</p>
+          </div>
+        </div>
+        <!-- End of Examples -->
+      </div>
+      <button id="open-modal" type="button" class="fixed bottom-0 mb-5 h-12 w-64 rounded-lg bg-[#0033FF] duration-700 hover:scale-[115%] text-white">Add New Worker</button>
     </div>
+    <!-- Mdale -->
+     <div id="modal" style="scrollbar-width: thin; scrollbar-color: #fff #B8B8FF;" class="hidden z-9999 fixed top-0 right-0 bottom-0 left-0 border-2 border-black overflow-auto shadow-xl bg-[#B8B8FF] w-80 h-96 mt-12 ml-auto mr-auto p-4 rounded-lg text-indigo-900">
+      <div>
+        <label for="name-input">Full Name</label>
+        <input id="name-input" type="text" class="border-2 border-indigo-600 w-full py-1.5 rounded-lg">
+        <div id="name-error"></div>
+      </div>
+      <div>
+        <label for="role-opt">Roles</label>
+        <select id="role-opt" class="w-full border-2 border-indigo-600 w-full py-1.5 rounded-lg">
+          <option value="" disabled selected></option>
+          <option value="Receptionists">Receptionists</option>
+          <option value="IT Technicians">IT Technicians</option>
+          <option value="Security Guards">Security Guards</option>
+          <option value="Manager">Manager</option>
+          <option value="Cleaning">Cleaning</option>
+          <option value="Other roles">Other roles</option>
+        </select>
+      </div>
+      <div>
+        <div class="ml-14 mr-14 mt-2">
+          <label for="image-input" class="block z-[-1] absolute w-36 h-36 rounded-[50%] py-14 text-center cursor-pointer border-sky-500 border-4">Upload Image</label>
+          <input id="image-input" type="file" accept="image/*" class="hidden">
+          <img src="./assets/images/default.png" class="w-36 h-36 rounded-[50%]">
+        </div>
+        <label for="email-input">Email</label>
+        <input id="email-input" type="email" class="w-full border-2 border-indigo-600 w-full py-1.5 rounded-lg">
+        <div id="email-error"></div>
+      </div>
+      <div>
+        <label for="phone-input">Telephone</label>
+        <input id="phone-input" type="tel" class="w-full border-2 border-indigo-600 w-full py-1.5 rounded-lg">
+        <div id="phone-error"></div>
+      </div>
+      <div>
+        <label for="map-input">localisation actuelle</label>
+        <input id="map-input" type="text" class="w-full border-2 border-indigo-600 w-full py-1.5 rounded-lg">
+        <div id="map-error"></div>
+      </div>
+      <div>
+        <div id="Experiences">
+          <div>
+            <h2 class="font-bold">Professional Experience</h2>
+            <div>
+              <label for="title-input">Title</label>
+              <input id="title-input" type="text" class="w-full border-2 border-indigo-600 w-full py-1.5 rounded-lg">
+              <div id="title-error"></div>
+            </div>
+            <div>
+              <label for="date-input">Date</label>
+              <input id="date-input" type="date" class="w-full border-2 border-indigo-600 w-full py-1.5 rounded-lg">
+              <div id="date-error"></div>
+            </div>
+            <div>
+              <label for="poste-input">poste</label>
+              <input id="poste-input" type="text" class="w-full border-2 border-indigo-600 w-full py-1.5 rounded-lg">
+              <div id="poste-error"></div>
+            </div>
+            <div>
+              <label for="mission-input">Mission</label>
+              <textarea id="mission-input" class="w-full h-16 border-2 border-indigo-600 w-full py-1.5 rounded-lg"></textarea>
+              <div id="mission-error"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <button id="new-experience" type="button" class="h-8 w-48 rounded-lg bg-[#0033FF] duration-700 text-white ml-8 hover:scale-[105%] duration-700">Add Another Experience</button>
+      </div>
+      <div class="flex justify-between mt-8">
+        <button id="save-btn" class="h-6 w-14 rounded-lg bg-[#43aa8b] text-center text-white">Save</button>
+        <button id="cancel-btn" class="h-6 w-14 rounded-lg bg-[#f8961e] text-center">Cancel</button>
+      </div>
+     </div>
     <!-- Workspace -->
     <div></div>
   </body>
