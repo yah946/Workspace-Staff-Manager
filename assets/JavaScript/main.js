@@ -38,13 +38,30 @@ newExperience.addEventListener('click',function(){
     Experiences.appendChild(divTag);
 
 });
+
+// image
+const imageInput = document.getElementById('image-input');
+imageInput.addEventListener('change',function(e){
+  const fichierSelectionne = e.target.files[0];
+  if(!fichierSelectionne)return;
+  const reader = new FileReader();
+  reader.addEventListener('load',function(){
+    var hexa64form = reader.result;
+    imageInput.previousElementSibling.src = hexa64form;
+    imageInput.nextElementSibling.style.opacity = "0%";
+  });
+  reader.readAsDataURL(fichierSelectionne);
+});
+
+const img = document.getElementById('img');
+
 const container = document.getElementById('container');
 const nameInput = document.getElementById('name-input');
 const roleOpt = document.getElementById('role-opt')
 saveBtn.addEventListener('click',function(){
     container.innerHTML+=`<div id="profile" class="flex justify-evenly bg-[#0000AA] p-3 w-64 rounded-lg m-2 text-white">
           <div>
-            <img src="./assets/images/default.png" class="w-12 h-12 rounded-[50%]">
+            <img src="${img.src}" class="w-12 h-12 rounded-[50%]">
           </div>
           <div>
             <h2 class="font-bold">${nameInput.value}</h2>
@@ -54,4 +71,7 @@ saveBtn.addEventListener('click',function(){
     modal.classList.add('hidden');
     nameInput.value='';
     roleOpt.value='';
+    
 })
+//validation
+
