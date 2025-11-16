@@ -1,20 +1,20 @@
-const openModal= document.getElementById('open-modal');
-const modal = document.getElementById('modal');
-const saveBtn = document.getElementById('save-btn');
-const newExperience = document.getElementById('new-experience');
-const Experiences = document.getElementById('Experiences');
+const openModal = document.getElementById("open-modal");
+const modal = document.getElementById("modal");
+const saveBtn = document.getElementById("save-btn");
+const newExperience = document.getElementById("new-experience");
+const Experiences = document.getElementById("Experiences");
 // Open Model
-openModal.addEventListener('click',function(){
-    modal.classList.remove('hidden');
-})
+openModal.addEventListener("click", function () {
+  modal.classList.remove("hidden");
+});
 //Close Model
-saveBtn.nextElementSibling.addEventListener('click',function(){
-    modal.classList.add('hidden');
-})
+saveBtn.nextElementSibling.addEventListener("click", function () {
+  modal.classList.add("hidden");
+});
 //Add new Experience fields
-newExperience.addEventListener('click',function(){
-    const divTag = document.createElement('div');
-    divTag.innerHTML=`<div class="border-t-2 border-indigo-900">
+newExperience.addEventListener("click", function () {
+  const divTag = document.createElement("div");
+  divTag.innerHTML = `<div class="border-t-2 border-indigo-900">
             <div>
               <label for="title-input">Title</label>
               <input id="title-input" type="text" class="w-full border-2 border-indigo-600 w-full py-1.5 rounded-lg">
@@ -34,18 +34,17 @@ newExperience.addEventListener('click',function(){
               <label for="mission-input">Mission</label>
               <textarea id="mission-input" class="w-full h-16 border-2 border-indigo-600 w-full py-1.5 rounded-lg"></textarea>
               <div id="mission-error"></div>
-            </div>`
-    Experiences.appendChild(divTag);
-
+            </div>`;
+  Experiences.appendChild(divTag);
 });
 
 // image
-const imageInput = document.getElementById('image-input');
-imageInput.addEventListener('change',function(e){
+const imageInput = document.getElementById("image-input");
+imageInput.addEventListener("change", function (e) {
   const fichierSelectionne = e.target.files[0];
-  if(!fichierSelectionne)return;
+  if (!fichierSelectionne) return;
   const reader = new FileReader();
-  reader.addEventListener('load',function(){
+  reader.addEventListener("load", function () {
     var hexa64form = reader.result;
     imageInput.previousElementSibling.src = hexa64form;
     imageInput.nextElementSibling.style.opacity = "0%";
@@ -53,25 +52,23 @@ imageInput.addEventListener('change',function(e){
   reader.readAsDataURL(fichierSelectionne);
 });
 
-const img = document.getElementById('img');
+const img = document.getElementById("img");
 
-const container = document.getElementById('container');
-const nameInput = document.getElementById('name-input');
-const roleOpt = document.getElementById('role-opt')
-saveBtn.addEventListener('click',function(){
-    container.innerHTML+=`<div id="profile" class="flex justify-evenly bg-[#0000AA] p-3 w-64 rounded-lg m-2 text-white">
+const container = document.getElementById("container");
+const nameInput = document.getElementById("name-input");
+const roleOpt = document.getElementById("role-opt");
+saveBtn.addEventListener("click", function () {
+  container.innerHTML += `<div id="profile" class="flex justify-evenly bg-[#f9f9fb] p-3 w-64 rounded-lg m-2">
           <div>
-            <img src="${img.src}" class="w-12 h-12 rounded-[50%]">
+            <img src="${img.src}" class="border-sky-500 border-2 w-12 h-12 rounded-[50%]">
           </div>
           <div>
             <h2 class="font-bold">${nameInput.value}</h2>
-            <p class="text-[#B8C6FF]">${roleOpt.value}</p>
+            <p class="text-gray-400"">${roleOpt.value}</p>
           </div>
-        </div>`
-    modal.classList.add('hidden');
-    nameInput.value='';
-    roleOpt.value='';
-    
-})
+        </div>`;
+  modal.classList.add("hidden");
+  nameInput.value = "";
+  roleOpt.value = "";
+});
 //validation
-
