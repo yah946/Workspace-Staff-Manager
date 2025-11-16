@@ -1,3 +1,5 @@
+//Inputs value
+const input = document.querySelectorAll('input')
 const openModal= document.getElementById('open-modal');
 const modal = document.getElementById('modal');
 const saveBtn = document.getElementById('save-btn');
@@ -5,7 +7,7 @@ const newExperience = document.getElementById('new-experience');
 const Experiences = document.getElementById('Experiences');
 // Open Model
 openModal.addEventListener('click',function(){
-    modal.classList.remove('hidden');
+  modal.classList.remove('hidden');
 })
 //Close Model
 saveBtn.nextElementSibling.addEventListener('click',function(){
@@ -55,11 +57,31 @@ imageInput.addEventListener('change',function(e){
 
 const img = document.getElementById('img');
 
+
 const container = document.getElementById('container');
 const nameInput = document.getElementById('name-input');
-const roleOpt = document.getElementById('role-opt')
+const roleOpt = document.getElementById('role-opt');
+let dataBase = JSON.parse(localStorage.profile) || [];
+
 saveBtn.addEventListener('click',function(){
-    container.innerHTML+=`<div id="profile" class="flex justify-evenly bg-[#0000AA] p-3 w-64 rounded-lg m-2 text-white">
+  let newProfile = {
+    name:x.value,
+    role:x.value,
+    img:x.value,
+    email:x.value,
+    tel:x.value,
+    map:x.value,
+    experiences:{
+      company:x.value,
+      role:x.value,
+      from:x.value,
+      to:x.value,
+    }
+  }
+  dataBase.push(newProfile);
+  localStorage.setItem('profile',JSON.stringify(dataBase));
+  
+  container.innerHTML+=`<div id="profile" class="flex justify-evenly bg-[#0000AA] p-3 w-64 rounded-lg m-2 text-white">
           <div>
             <img src="${img.src}" class="w-12 h-12 rounded-[50%]">
           </div>
@@ -68,10 +90,10 @@ saveBtn.addEventListener('click',function(){
             <p class="text-[#B8C6FF]">${roleOpt.value}</p>
           </div>
         </div>`
-    modal.classList.add('hidden');
-    nameInput.value='';
-    roleOpt.value='';
+  modal.classList.add('hidden');
+  nameInput.value='';
+  roleOpt.value='';
+  img.src='';
     
 })
 //validation
-
