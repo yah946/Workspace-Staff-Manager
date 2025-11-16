@@ -31,14 +31,26 @@
     <!-- Title -->
     <title>Workspace Staff Manager</title>
   </head>
-  <body class="font-[Space_Grotesk] bg-[#E6EBFF] selection:bg-red-500 selection:text-white">
+  <body
+    class="font-[Space_Grotesk] bg-[#E6EBFF] selection:bg-red-500 selection:text-white"
+  >
     <!-- Side Bar -->
     <div id="side-bar" class="h-screen w-80 bg-[#B8C6FF] flex justify-center">
-      <div id="container" style="scrollbar-width: thin;scrollbar-color: #0000AA #B8C6FF;" class="w-72 mt-2 h-[450px] overflow-y-auto flex-col">
+      <div
+        id="container"
+        style="scrollbar-width: thin; scrollbar-color: #0000aa #b8c6ff"
+        class="w-72 mt-2 h-[450px] overflow-y-auto flex-col"
+      >
         <!-- Examples -->
-        <div id="profile" class="flex justify-evenly bg-[#0000AA] p-3 w-64 rounded-lg m-2 text-white">
+        <div
+          id="profile"
+          class="flex justify-evenly bg-[#0000AA] p-3 w-64 rounded-lg m-2 text-white"
+        >
           <div>
-            <img src="./assets/images/default.png" class="w-12 h-12 rounded-[50%]">
+            <img
+              src="./assets/images/default.png"
+              class="w-12 h-12 rounded-[50%]"
+            />
           </div>
           <div>
             <h2 class="font-bold">First Second</h2>
@@ -47,18 +59,36 @@
         </div>
         <!-- End of Examples -->
       </div>
-      <button id="open-modal" type="button" class="fixed bottom-0 mb-5 h-12 w-64 rounded-lg bg-[#0033FF] duration-700 hover:scale-[115%] text-white">Add New Worker</button>
+      <button
+        id="open-modal"
+        type="button"
+        class="fixed bottom-0 mb-5 h-12 w-64 rounded-lg bg-[#0033FF] duration-700 hover:scale-[115%] text-white"
+      >
+        Add New Worker
+      </button>
     </div>
     <!-- Mdale -->
-     <div id="modal" style="scrollbar-width: thin; scrollbar-color: #fff #B8B8FF;" class="hidden fixed top-0 right-0 bottom-0 left-0 shadow-md overflow-auto bg-[#B8B8FF] w-80 h-96 mt-12 ml-auto mr-auto p-4 rounded-lg text-indigo-900">
+    <div
+      id="modal"
+      style="scrollbar-width: thin; scrollbar-color: #fff #b8b8ff"
+      class="hidden fixed top-0 right-0 bottom-0 left-0 shadow-md overflow-auto bg-[#B8B8FF] w-80 h-96 mt-12 ml-auto mr-auto p-4 rounded-lg text-indigo-900"
+    >
       <div>
         <label for="name-input">Full Name</label>
-        <input id="name-input" type="text" class="border-2 border-indigo-600 w-full py-1.5 rounded-lg" autofocus>
+        <input
+          id="name-input"
+          type="text"
+          class="border-2 border-indigo-600 w-full py-1.5 rounded-lg"
+          autofocus
+        />
         <div id="name-input-error"></div>
       </div>
       <div>
         <label for="role-opt">Roles</label>
-        <select id="role-opt" class="w-full border-2 border-indigo-600 py-1.5 rounded-lg">
+        <select
+          id="role-opt"
+          class="w-full border-2 border-indigo-600 py-1.5 rounded-lg"
+        >
           <option value="" disabled selected></option>
           <option value="Receptionists">Receptionists</option>
           <option value="IT Technicians">IT Technicians</option>
@@ -72,27 +102,56 @@
         <div>
           <div>
             <label for="url-input">Image Link</label>
-            <input id="url-input" type="url" class="border-2 border-indigo-600 w-full py-1.5 rounded-lg">
+            <input
+              id="url-input"
+              type="url"
+              class="border-2 border-indigo-600 w-full py-1.5 rounded-lg"
+            />
             <div id="url-input-error"></div>
           </div>
           <div class="ml-14 mr-14 mt-2">
-            <img id="img" src="" class="z-[-1] absolute w-36 h-36 rounded-[50%]">
-            <input id="image-input" type="file" accept="image/*" class="hidden">
-            <label for="image-input" class="block w-36 h-36 rounded-[50%] py-14 text-center cursor-pointer border-sky-500 border-4">Upload Image</label>
+            <img
+              id="img"
+              src=""
+              class="z-[-1] absolute w-36 h-36 rounded-[50%]"
+            />
+            <input
+              id="image-input"
+              type="file"
+              accept="image/*"
+              class="hidden"
+            />
+            <label
+              for="image-input"
+              class="block w-36 h-36 rounded-[50%] py-14 text-center cursor-pointer border-sky-500 border-4"
+              >Upload Image</label
+            >
           </div>
         </div>
         <label for="email-input">Email</label>
-        <input id="email-input" type="email" class="w-full border-2 border-indigo-600 py-1.5 rounded-lg">
+        <input
+          id="email-input"
+          type="email"
+          class="w-full border-2 border-indigo-600 py-1.5 rounded-lg"
+        />
         <div id="email-input-error"></div>
       </div>
       <div>
         <label for="phone-input">Telephone</label>
-        <input id="phone-input" type="tel" class="w-full border-2 border-indigo-600 py-1.5 rounded-lg">
+        <input
+          id="phone-input"
+          type="tel"
+          class="w-full border-2 border-indigo-600 py-1.5 rounded-lg"
+        />
         <div id="phone-input-error"></div>
       </div>
       <div>
         <label for="map-input">localisation actuelle</label>
-        <input id="map-input" type="text" class="w-full border-2 border-indigo-600 py-1.5 rounded-lg">
+        <input
+          id="map-input"
+          type="text"
+          class="w-full border-2 border-indigo-600 py-1.5 rounded-lg"
+        />
         <div id="map-input-error"></div>
       </div>
       <div>
@@ -101,38 +160,77 @@
             <h2 class="font-bold">Professional Experience</h2>
             <div>
               <label for="title-input">Title</label>
-              <input id="title-input" type="text" class="w-full border-2 border-indigo-600 py-1.5 rounded-lg">
+              <input
+                id="title-input"
+                type="text"
+                class="w-full border-2 border-indigo-600 py-1.5 rounded-lg"
+              />
               <div id="title-input-error"></div>
             </div>
             <div>
               <label for="date-input">Date</label>
-              <input id="date-input" type="date" class="w-full border-2 border-indigo-600 py-1.5 rounded-lg">
+              <input
+                id="date-input"
+                type="date"
+                class="w-full border-2 border-indigo-600 py-1.5 rounded-lg"
+              />
               <div id="date-input-error"></div>
             </div>
             <div>
               <label for="poste-input">poste</label>
-              <input id="poste-input" type="text" class="w-full border-2 border-indigo-600 py-1.5 rounded-lg">
+              <input
+                id="poste-input"
+                type="text"
+                class="w-full border-2 border-indigo-600 py-1.5 rounded-lg"
+              />
               <div id="poste-input-error"></div>
             </div>
             <div>
               <label for="mission-input">Mission</label>
-              <textarea id="mission-input" class="w-full h-16 border-2 border-indigo-600 py-1.5 rounded-lg"></textarea>
+              <textarea
+                id="mission-input"
+                class="w-full h-16 border-2 border-indigo-600 py-1.5 rounded-lg"
+              ></textarea>
               <div id="mission-input-error"></div>
             </div>
           </div>
         </div>
       </div>
       <div>
-        <button id="new-experience" type="button" class="h-8 w-48 rounded-lg bg-[#0033FF] duration-700 text-white ml-8 hover:scale-[105%]">Add Another Experience</button>
+        <button
+          id="new-experience"
+          type="button"
+          class="h-8 w-48 rounded-lg bg-[#0033FF] duration-700 text-white ml-8 hover:scale-[105%]"
+        >
+          Add Another Experience
+        </button>
       </div>
       <div class="flex justify-between mt-8">
-        <button id="save-btn" class="h-6 w-14 rounded-lg bg-[#43aa8b] text-center text-white">Save</button>
-        <button id="cancel-btn" class="h-6 w-14 rounded-lg bg-[#f8961e] text-center">Cancel</button>
+        <button
+          id="save-btn"
+          class="h-6 w-14 rounded-lg bg-[#43aa8b] text-center text-white"
+        >
+          Save
+        </button>
+        <button
+          id="cancel-btn"
+          class="h-6 w-14 rounded-lg bg-[#f8961e] text-center"
+        >
+          Cancel
+        </button>
       </div>
-     </div>
+    </div>
     <!-- Workspace -->
-    <div class="bg-red-500">
-      
+    <div
+      id="workspace-container"
+      class="bg-[url(./assets/images/workspace.jpg)] w-[840px] h-[475px] m-auto mr-14 rounded-lg bg-cover bg-center"
+    >
+      <div id="meet rooms" class="flex"></div>
+      <div id="servers rooms"></div>
+      <div id="security rooms"></div>
+      <div id="reception rooms"></div>
+      <div id="staff rooms"></div>
+      <div id="vault rooms"></div>
     </div>
   </body>
 </html>
