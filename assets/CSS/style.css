@@ -1,0 +1,46 @@
+body {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-areas:
+    "sideBar workspace workspace"
+    "sideBar workspace workspace"
+    "sideBar workspace workspace";
+}
+
+#side-bar {
+  grid-area: sideBar;
+}
+#workspace-container {
+  grid-area: workspace;
+  display: grid;
+  grid-template-columns: 325px 128px 190px 190px;
+  grid-template-rows: repeat(3, 1fr);
+  grid-area: " meet . servers security" " reception . . ."
+    " reception . staff vault";
+}
+
+#meet {
+  grid-area: meet;
+  background: cyan;
+}
+#servers {
+  grid-area: servers;
+  background: cyan;
+}
+#security {
+  grid-area: security;
+  background: cyan;
+}
+#reception {
+  grid-area: reception;
+  background: cyan;
+}
+#staff {
+  grid-area: staff;
+  background: cyan;
+}
+#vault {
+  grid-area: vault;
+  background: cyan;
+}
