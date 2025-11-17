@@ -16,31 +16,33 @@ body {
   display: grid;
   grid-template-columns: 325px 128px 190px 190px;
   grid-template-rows: repeat(3, 1fr);
-  grid-area: " meet . servers security" " reception . . ."
-    " reception . staff vault";
+  grid-template-areas:
+  " meet . servers security"
+  " reception . . ."
+  " reception . staff vault";
 }
 
 #meet {
   grid-area: meet;
-  background: cyan;
 }
 #servers {
   grid-area: servers;
-  background: cyan;
 }
 #security {
   grid-area: security;
-  background: cyan;
 }
 #reception {
   grid-area: reception;
-  background: cyan;
 }
 #staff {
   grid-area: staff;
-  background: cyan;
 }
 #vault {
   grid-area: vault;
-  background: cyan;
+}
+.edit{
+  border: 1px solid white;
+}
+.edit:active{
+  border: 1px solid black;
 }
