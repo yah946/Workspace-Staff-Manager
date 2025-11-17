@@ -110,17 +110,17 @@ function showData() {
               <p class="text-gray-400">${dataBase[i].role}</p>
             </div>
             <div class="flex gap-2">
-                <span onclick="editProfile(${i})" class="active:border-2 active:border-black border-2 border-yellow-400 bg-yellow-400 p-1 rounded-lg"><i class="fa-solid fa-pen"></i></span>
-                <span onclick="editProfile(${i})" class="active:border-2 active:border-black border-2 border-red-400 bg-red-400 p-1 rounded-lg"><i class="fa-solid fa-trash"></i></span>
+                <span onclick="editProfile(${i})" class="active:border-2 active:border-black border-2 border-yellow-400 bg-yellow-400 p-1 rounded-lg inline-block text-transparent bg-clip-text"><i class="fa-solid fa-pen"></i></span>
+                <span onclick="deleteData(${i})" class="active:border-2 active:border-black border-2 border-red-400 bg-red-400 p-1 rounded-lg inline-block text-transparent bg-clip-text"><i class="fa-solid fa-trash"></i></span>
             </div>
           </div>`;
   }
   container.innerHTML=table;
 }
 saveBtn.addEventListener("click", function () {
-  // if (!validateForm()) {
-  //   return;
-  // }
+  if (!validateForm()) {
+    return;
+  }
   // Save new profiles to localStorage
   let newProfile = {
     name: nameInput.value,
@@ -164,7 +164,7 @@ const patterns = {
     message: "You must choose a role",
   },
   "url-input": {
-    regex: /^(http\/\/|https\/\/)?(www\.)?[A-Za-z0-9.-]+\.[A-Za-z]{2,5}$/,
+    regex: /^[A-Za-z0-9.-]+\.[A-Za-z]{2,5}$/,
     message: "Enter a valid url",
   },
   "company-input": {
@@ -235,4 +235,10 @@ function editProfile(i){
   changeModal="Edit Profile";
   tmp = i;
   imageInput.nextElementSibling.style.opacity = "0%";
+}
+//Delete
+function deleteData(i){
+  dataBase.splice(i,1);
+  localStorage.profile = JSON.stringify(dataBase);
+  showData();
 }
