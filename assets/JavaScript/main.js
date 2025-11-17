@@ -1,16 +1,21 @@
 const openModal = document.getElementById("open-modal");
 const modal = document.getElementById("modal");
 const saveBtn = document.getElementById("save-btn");
+const xMark = document.getElementById("x-mark");
 const newExperience = document.getElementById("new-experience");
 const Experiences = document.getElementById("Experiences");
+let changeModal = 'Save Worker';
+let tmp;
 // Open Model
 openModal.addEventListener("click", function () {
   modal.classList.remove("hidden");
 });
 //Close Model
-saveBtn.nextElementSibling.addEventListener("click", function () {
-  modal.classList.add("hidden");
-});
+[saveBtn.nextElementSibling, xMark].forEach((i) =>
+  i.addEventListener("click", function () {
+    modal.classList.add("hidden");
+  })
+);
 //Add new Experience fields
 newExperience.addEventListener("click", function () {
   const divTag = document.createElement("div");
@@ -87,10 +92,35 @@ if (localStorage.profile != null) {
 } else {
   dataBase = [];
 }
-saveBtn.addEventListener("click", function () {
-  if (!validateForm()) {
-    return;
+function showData() {
+  let table = '';
+  for (let i = 0; i<dataBase.length; i++) {
+    table += `<div
+            id="profile"
+            class="flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-64 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
+          >
+            <div>
+              <img
+                src="${dataBase[i].img}"
+                class="border-[#007afc] border-2 w-12 h-12 rounded-[50%]"
+              />
+            </div>
+            <div>
+              <h2 class="font-bold">${dataBase[i].name}</h2>
+              <p class="text-gray-400">${dataBase[i].role}</p>
+            </div>
+            <div class="flex gap-2">
+                <span onclick="editProfile(${i})" class="active:border-2 active:border-black border-2 border-yellow-400 bg-yellow-400 p-1 rounded-lg"><i class="fa-solid fa-pen"></i></span>
+                <span onclick="editProfile(${i})" class="active:border-2 active:border-black border-2 border-red-400 bg-red-400 p-1 rounded-lg"><i class="fa-solid fa-trash"></i></span>
+            </div>
+          </div>`;
   }
+  container.innerHTML=table;
+}
+saveBtn.addEventListener("click", function () {
+  // if (!validateForm()) {
+  //   return;
+  // }
   // Save new profiles to localStorage
   let newProfile = {
     name: nameInput.value,
@@ -105,33 +135,24 @@ saveBtn.addEventListener("click", function () {
       to: dateTo.value,
     },
   };
-  dataBase.push(newProfile);
+  if(changeModal==='Save Worker'){
+    dataBase.push(newProfile);
+  }else{
+    dataBase[tmp] = newProfile;
+    changeModal = "Save Worker";
+    saveBtn.textContent='Save Worker';
+  }
   localStorage.setItem("profile", JSON.stringify(dataBase));
   //Add profiles to side bar
-  container.innerHTML += `<div
-  id="profile"
-  class="flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-64 rounded-lg m-2"
-  >
-  <div>
-  <img
-  src="${img.src}"
-  class="border-[#007afc] border-2 w-12 h-12 rounded-[50%]"
-  />
-  </div>
-  <div>
-  <h2 class="font-bold">${nameInput.value}</h2>
-  <p class="text-gray-400">${roleOpt.value}</p>
-  </div>
-  <div>
-  <button type="button" class="text-[#fac105]">Edit</button>
-  </div>
-  </div>`;
+  showData();
   modal.classList.add("hidden");
   //Clear all inputs
   for (let i = 0; i < inputs.length; i++) {
     inputs[i].value = "";
   }
+  img.src = "";
 });
+showData();
 //validation
 const patterns = {
   "name-input": {
@@ -195,4 +216,23 @@ function validateForm() {
     valid &&= validateField(field, field.value);
   });
   return valid;
+}
+
+//Edit
+const edit = document.querySelectorAll(".edit");
+function editProfile(i){
+  modal.classList.remove("hidden");
+  nameInput.value = dataBase[i].name;
+  roleOpt.value = dataBase[i].role;
+  img.src = dataBase[i].img;
+  emailInput.value = dataBase[i].email;
+  phoneInput.value = dataBase[i].tel;
+  companyInput.value = dataBase[i].experiences.company;
+  roleInput.value = dataBase[i].experiences.role;
+  dateFrom.value = dataBase[i].experiences.from;
+  dateTo.value = dataBase[i].experiences.to;
+  saveBtn.textContent = "Edit Profile";
+  changeModal="Edit Profile";
+  tmp = i;
+  imageInput.nextElementSibling.style.opacity = "0%";
 }
