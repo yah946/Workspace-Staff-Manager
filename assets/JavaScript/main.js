@@ -69,17 +69,6 @@ imageInput.addEventListener("change", function (e) {
 });
 const img = document.getElementById("img");
 //End of uploadImage
-const inputs = document.querySelectorAll("input");
-let inputsTag = [];
-for (let i = 0; i > inputs.length; i++) {
-  inputsTag.push(inputs[i].classList);
-}
-// console.log(inputsTag[0].includes("hidden"));
-
-// function FindErrors(input) {
-//   inputsTag.forEach((i) => i.classList != hidden);
-// }
-function showErrors() {}
 
 const container = document.getElementById("container");
 const nameInput = document.getElementById("name-input");
@@ -90,86 +79,120 @@ const roleInput = document.getElementById("role-ex-input");
 const dateFrom = document.getElementById("date-f-input");
 const dateTo = document.getElementById("date-t-input");
 const roleOpt = document.getElementById("role-opt");
+const inputs = document.querySelectorAll("input");
 
 let dataBase = [];
-if(localStorage.profile!=null){
+if (localStorage.profile != null) {
   dataBase = JSON.parse(localStorage.profile);
-}else{
+} else {
   dataBase = [];
 }
 saveBtn.addEventListener("click", function () {
+  if (!validateForm()) {
+    return;
+  }
   // Save new profiles to localStorage
   let newProfile = {
-    name:nameInput.value,
-    role:roleOpt.value,
-    img:img.src,
-    email:emailInput.value,
-    tel:phoneInput.value,
-    experiences:{
-      company:companyInput.value,
-      role:roleInput.value,
-      from:dateFrom.value,
-      to:dateTo.value,
-    }
-  }
+    name: nameInput.value,
+    role: roleOpt.value,
+    img: img.src,
+    email: emailInput.value,
+    tel: phoneInput.value,
+    experiences: {
+      company: companyInput.value,
+      role: roleInput.value,
+      from: dateFrom.value,
+      to: dateTo.value,
+    },
+  };
   dataBase.push(newProfile);
-  localStorage.setItem('profile',JSON.stringify(dataBase));
+  localStorage.setItem("profile", JSON.stringify(dataBase));
   //Add profiles to side bar
   container.innerHTML += `<div
-          id="profile"
-          class="flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-64 rounded-lg m-2"
-        >
-          <div>
-            <img
-              src="${img.src}"
-              class="border-[#007afc] border-2 w-12 h-12 rounded-[50%]"
-            />
-          </div>
-          <div>
-            <h2 class="font-bold">${nameInput.value}</h2>
-            <p class="text-gray-400">${roleOpt.value}</p>
-          </div>
-          <div>
-            <button type="button" class="text-[#fac105]">Edit</button>
-          </div>
-        </div>`;
+  id="profile"
+  class="flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-64 rounded-lg m-2"
+  >
+  <div>
+  <img
+  src="${img.src}"
+  class="border-[#007afc] border-2 w-12 h-12 rounded-[50%]"
+  />
+  </div>
+  <div>
+  <h2 class="font-bold">${nameInput.value}</h2>
+  <p class="text-gray-400">${roleOpt.value}</p>
+  </div>
+  <div>
+  <button type="button" class="text-[#fac105]">Edit</button>
+  </div>
+  </div>`;
   modal.classList.add("hidden");
   //Clear all inputs
-  nameInput.value = "";
-  roleOpt.value = "";
+  for (let i = 0; i < inputs.length; i++) {
+    inputs[i].value = "";
+  }
 });
 //validation
-// const patterns = {
-//   "name-input": {
-//     regex: /^[A-Za-z\s]{2,50}$/,
-//     message: "Name must be 2 - 50 caracters long",
-//   },
-//   "email-input": {
-//     regex: /^[A-Za-z0-9._%+-]{2,30}@[A-Za-z.-]{2,10}\.[A-Za-z.]{2,3}$/,
-//     message: "Enter a valid email",
-//   },
-//   "phone-input": {
-//     regex: /^\+?[0-9]{7,15}$/,
-//     message: "Enter a valid phone number",
-//   },
-//   "url-input": {
-//     regex: /^(http\/\/|https\/\/)?(www\.)?[A-Za-z0-9.-]+\.[A-Za-z]{2,5}$/,
-//     message: "Enter a valid url",
-//   },
-//   "company-input": {
-//     regex: /^[A-Za-z\s]{2,50}$/,
-//     message: "Company name must be 2 - 50 caracters long",
-//   },
-//   "role-ex-input": {
-//     regex: /^[A-Za-z\s]{2,50}$/,
-//     message: "Company name must be 2 - 50 caracters long",
-//   },
-//   "date-f-input": {
-//     regex: /^\d{4}-\d{2}-\d{2}$/,
-//     message: "add a date",
-//   },
-//   "date-t-input": {
-//     regex: /^\d{4}-\d{2}-\d{2}$/,
-//     message: "add a date",
-//   },
-// };
+const patterns = {
+  "name-input": {
+    regex: /^[A-Za-z\s]{2,50}$/,
+    message: "Name must be 2 - 50 caracters long",
+  },
+  "role-opt": {
+    regex: /^[A-Za-z\s]{1,}$/,
+    message: "You must choose a role",
+  },
+  "url-input": {
+    regex: /^(http\/\/|https\/\/)?(www\.)?[A-Za-z0-9.-]+\.[A-Za-z]{2,5}$/,
+    message: "Enter a valid url",
+  },
+  "company-input": {
+    regex: /^[A-Za-z\s]{2,50}$/,
+    message: "Company name must be 2 - 50 caracters long",
+  },
+  "role-ex-input": {
+    regex: /^[A-Za-z\s]{2,50}$/,
+    message: "Company name must be 2 - 50 caracters long",
+  },
+  "date-f-input": {
+    regex: /^\d{4}-\d{2}-\d{2}$/,
+    message: "add a date",
+  },
+  "date-t-input": {
+    regex: /^\d{4}-\d{2}-\d{2}$/,
+    message: "add a date",
+  },
+  "email-input": {
+    regex: /^[A-Za-z0-9._%+-]{2,30}@[A-Za-z.-]{2,10}\.[A-Za-z.]{2,3}$/,
+    message: "Enter a valid email",
+  },
+  "phone-input": {
+    regex: /^\+?[0-9]{7,15}$/,
+    message: "Enter a valid phone number",
+  },
+};
+
+function toggleError(field, show, message = "") {
+  let divError = field.nextElementSibling;
+  divError.innerText = message;
+  if (show) {
+    divError.classList.remove("hidden");
+  } else {
+    divError.classList.add("hidden");
+  }
+}
+function validateField(field, value) {
+  let id = field.id;
+  let rule = patterns[id];
+  let valid = rule.regex.test(value);
+  toggleError(field, !valid, rule.message);
+  return valid;
+}
+function validateForm() {
+  let valid = true;
+  Object.entries(patterns).forEach(([id]) => {
+    let field = document.getElementById(id);
+    valid &&= validateField(field, field.value);
+  });
+  return valid;
+}
