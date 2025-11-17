@@ -54,8 +54,7 @@ newExperience.addEventListener("click", function () {
             </div>`;
   Experiences.appendChild(divTag);
 });
-
-// image
+// uploadimage
 const imageInput = document.getElementById("image-input");
 imageInput.addEventListener("change", function (e) {
   const fichierSelectionne = e.target.files[0];
@@ -69,7 +68,7 @@ imageInput.addEventListener("change", function (e) {
   reader.readAsDataURL(fichierSelectionne);
 });
 const img = document.getElementById("img");
-
+//End of uploadImage
 const inputs = document.querySelectorAll("input");
 let inputsTag = [];
 for (let i = 0; i > inputs.length; i++) {
@@ -84,8 +83,38 @@ function showErrors() {}
 
 const container = document.getElementById("container");
 const nameInput = document.getElementById("name-input");
+const emailInput = document.getElementById("email-input");
+const phoneInput = document.getElementById("phone-input");
+const companyInput = document.getElementById("company-input");
+const roleInput = document.getElementById("role-ex-input");
+const dateFrom = document.getElementById("date-f-input");
+const dateTo = document.getElementById("date-t-input");
 const roleOpt = document.getElementById("role-opt");
+
+let dataBase = [];
+if(localStorage.profile!=null){
+  dataBase = JSON.parse(localStorage.profile);
+}else{
+  dataBase = [];
+}
 saveBtn.addEventListener("click", function () {
+  // Save new profiles to localStorage
+  let newProfile = {
+    name:nameInput.value,
+    role:roleOpt.value,
+    img:img.src,
+    email:emailInput.value,
+    tel:phoneInput.value,
+    experiences:{
+      company:companyInput.value,
+      role:roleInput.value,
+      from:dateFrom.value,
+      to:dateTo.value,
+    }
+  }
+  dataBase.push(newProfile);
+  localStorage.setItem('profile',JSON.stringify(dataBase));
+  //Add profiles to side bar
   container.innerHTML += `<div
           id="profile"
           class="flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-64 rounded-lg m-2"
@@ -105,41 +134,42 @@ saveBtn.addEventListener("click", function () {
           </div>
         </div>`;
   modal.classList.add("hidden");
+  //Clear all inputs
   nameInput.value = "";
   roleOpt.value = "";
 });
 //validation
-const patterns = {
-  "name-input": {
-    regex: /^[A-Za-z\s]{2,50}$/,
-    message: "Name must be 2 - 50 caracters long",
-  },
-  "email-input": {
-    regex: /^[A-Za-z0-9._%+-]{2,30}@[A-Za-z.-]{2,10}\.[A-Za-z.]{2,3}$/,
-    message: "Enter a valid email",
-  },
-  "phone-input": {
-    regex: /^\+?[0-9]{7,15}$/,
-    message: "Enter a valid phone number",
-  },
-  "url-input": {
-    regex: /^(http\/\/|https\/\/)?(www\.)?[A-Za-z0-9.-]+\.[A-Za-z]{2,5}$/,
-    message: "Enter a valid url",
-  },
-  "company-input": {
-    regex: /^[A-Za-z\s]{2,50}$/,
-    message: "Company name must be 2 - 50 caracters long",
-  },
-  "role-ex-input": {
-    regex: /^[A-Za-z\s]{2,50}$/,
-    message: "Company name must be 2 - 50 caracters long",
-  },
-  "date-f-input": {
-    regex: /^\d{4}-\d{2}-\d{2}$/,
-    message: "add a date",
-  },
-  "date-t-input": {
-    regex: /^\d{4}-\d{2}-\d{2}$/,
-    message: "add a date",
-  },
-};
+// const patterns = {
+//   "name-input": {
+//     regex: /^[A-Za-z\s]{2,50}$/,
+//     message: "Name must be 2 - 50 caracters long",
+//   },
+//   "email-input": {
+//     regex: /^[A-Za-z0-9._%+-]{2,30}@[A-Za-z.-]{2,10}\.[A-Za-z.]{2,3}$/,
+//     message: "Enter a valid email",
+//   },
+//   "phone-input": {
+//     regex: /^\+?[0-9]{7,15}$/,
+//     message: "Enter a valid phone number",
+//   },
+//   "url-input": {
+//     regex: /^(http\/\/|https\/\/)?(www\.)?[A-Za-z0-9.-]+\.[A-Za-z]{2,5}$/,
+//     message: "Enter a valid url",
+//   },
+//   "company-input": {
+//     regex: /^[A-Za-z\s]{2,50}$/,
+//     message: "Company name must be 2 - 50 caracters long",
+//   },
+//   "role-ex-input": {
+//     regex: /^[A-Za-z\s]{2,50}$/,
+//     message: "Company name must be 2 - 50 caracters long",
+//   },
+//   "date-f-input": {
+//     regex: /^\d{4}-\d{2}-\d{2}$/,
+//     message: "add a date",
+//   },
+//   "date-t-input": {
+//     regex: /^\d{4}-\d{2}-\d{2}$/,
+//     message: "add a date",
+//   },
+// };

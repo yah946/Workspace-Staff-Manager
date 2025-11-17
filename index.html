@@ -208,7 +208,7 @@
       </button>
     </div>
     <!-- Mdale -->
-    <form
+    <div
       id="modal"
       style="scrollbar-width: thin; scrollbar-color: gray #fff"
       class="hidden fixed top-0 right-0 bottom-0 left-0 shadow-md overflow-auto bg-[#fff] w-[450px] mt-8 mb-8 ml-auto mr-auto p-4 rounded-lg text-gray-600"
@@ -275,49 +275,51 @@
           </div>
         </div>
       </div>
-        <div id="Experiences">
-          <h2>Experiences:</h2>
-          <div class="bg-[#f9f9fb] border border-gray-300 w-full py-1.5 rounded-lg p-2">
-            <div>
-              <label for="company-input">Company:</label>
-              <input
-                id="company-input"
-                type="text"
-                class="border border-gray-600 w-full py-1.5 rounded-lg"
-              />
-              <div id="company-input-error"></div>
-            </div>
-            <div>
-              <label for="role-ex-input">Role:</label>
-              <input
-                id="role-ex-input"
-                type="text"
-                class="border border-gray-600 w-full py-1.5 rounded-lg"
-              />
+      <div id="Experiences">
+        <h2>Experiences:</h2>
+        <div class="bg-[#f9f9fb] border border-gray-300 w-full py-1.5 rounded-lg p-2">
+          <div>
+            <label for="company-input">Company:</label>
+            <input
+              id="company-input"
+              type="text"
+              class="border border-gray-600 w-full py-1.5 rounded-lg"
+              required
+            />
+            <div id="company-input-error"></div>
+          </div>
+          <div>
+            <label for="role-ex-input">Role:</label>
+            <input
+              id="role-ex-input"
+              type="text"
+              class="border border-gray-600 w-full py-1.5 rounded-lg"
+              required
+            />
               <div id="role-ex-input-error"></div>
-            </div>
-            <div>
-              <label for="date-f-input">From:</label>
-              <input
-                id="date-f-input"
-                type="date"
-                class="border border-gray-600 w-full py-1.5 rounded-lg"
-                required
-              />
-              <div id="date-f-input-error"></div>
-            </div>
-            <div>
-              <label for="date-t-input">To:</label>
-              <input
-                id="date-t-input"
-                type="date"
-                class="border border-gray-600 w-full py-1.5 rounded-lg"
-                required
-              />
-              <div id="date-t-input-error"></div>
-            </div>
+          </div>
+          <div>
+            <label for="date-f-input">From:</label>
+            <input
+              id="date-f-input"
+              type="date"
+              class="border border-gray-600 w-full py-1.5 rounded-lg"
+              required
+            />
+            <div id="date-f-input-error"></div>
+          </div>
+          <div>
+            <label for="date-t-input">To:</label>
+            <input
+              id="date-t-input"
+              type="date"
+              class="border border-gray-600 w-full py-1.5 rounded-lg"
+              required
+            />
+            <div id="date-t-input-error"></div>
           </div>
         </div>
+      </div>
       <div>
         <button
           id="new-experience"
@@ -333,6 +335,7 @@
           id="email-input"
           type="email"
           class="border border-gray-600 w-full py-1.5 rounded-lg"
+          required
         />
         <div id="email-input-error"></div>
       </div>
@@ -342,6 +345,7 @@
           id="phone-input"
           type="tel"
           class="border border-gray-600 w-full py-1.5 rounded-lg"
+          required
         />
         <div id="phone-input-error"></div>
       </div>
@@ -349,6 +353,7 @@
         <button
           id="save-btn"
           class="h-10 w-32 rounded-lg bg-[#007afc] text-center text-white"
+          type="button"
         >
           Save Worker
         </button>
@@ -359,7 +364,6 @@
           Cancel
         </button>
       </div>
-    </form>
     </div>
     <!-- Workspace -->
     <div
