@@ -1,10 +1,11 @@
+const urlInput = document.getElementById('url-input');
 const openModal = document.getElementById("open-modal");
 const modal = document.getElementById("modal");
 const saveBtn = document.getElementById("save-btn");
 const xMark = document.getElementById("x-mark");
 const newExperience = document.getElementById("new-experience");
 const Experiences = document.getElementById("Experiences");
-let changeModal = 'Save Worker';
+let changeModal = "Save Worker";
 let tmp;
 // Open Model
 openModal.addEventListener("click", function () {
@@ -14,6 +15,11 @@ openModal.addEventListener("click", function () {
 [saveBtn.nextElementSibling, xMark].forEach((i) =>
   i.addEventListener("click", function () {
     modal.classList.add("hidden");
+    //Clear all inputs
+    for (let i = 0; i < inputs.length; i++) {
+      inputs[i].value = "";
+    }
+    img.src = "";
   })
 );
 //Add new Experience fields
@@ -62,6 +68,8 @@ newExperience.addEventListener("click", function () {
 // uploadimage
 const imageInput = document.getElementById("image-input");
 imageInput.addEventListener("change", function (e) {
+  urlInput.disabled=true;
+  urlInput.classList.add('cursor-not-allowed')
   const fichierSelectionne = e.target.files[0];
   if (!fichierSelectionne) return;
   const reader = new FileReader();
@@ -74,6 +82,15 @@ imageInput.addEventListener("change", function (e) {
 });
 const img = document.getElementById("img");
 //End of uploadImage
+urlInput.addEventListener('input',function(){
+  if(urlInput.value!=''){
+    imageInput.disabled = true;
+    imageInput.nextElementSibling.classList.add('cursor-not-allowed');
+  }else{
+    imageInput.disabled = false;
+    imageInput.nextElementSibling.classList.remove('cursor-not-allowed');
+  }
+})
 
 const container = document.getElementById("container");
 const nameInput = document.getElementById("name-input");
@@ -93,8 +110,8 @@ if (localStorage.profile != null) {
   dataBase = [];
 }
 function showData() {
-  let table = '';
-  for (let i = 0; i<dataBase.length; i++) {
+  let table = "";
+  for (let i = 0; i < dataBase.length; i++) {
     table += `<div
             id="profile"
             class="flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-64 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
@@ -115,12 +132,12 @@ function showData() {
             </div>
           </div>`;
   }
-  container.innerHTML=table;
+  container.innerHTML = table;
 }
 saveBtn.addEventListener("click", function () {
-  if (!validateForm()) {
-    return;
-  }
+  // if (!validateForm()) {
+  //   return;
+  // }
   // Save new profiles to localStorage
   let newProfile = {
     name: nameInput.value,
@@ -135,12 +152,12 @@ saveBtn.addEventListener("click", function () {
       to: dateTo.value,
     },
   };
-  if(changeModal==='Save Worker'){
+  if (changeModal === "Save Worker") {
     dataBase.push(newProfile);
-  }else{
+  } else {
     dataBase[tmp] = newProfile;
     changeModal = "Save Worker";
-    saveBtn.textContent='Save Worker';
+    saveBtn.textContent = "Save Worker";
   }
   localStorage.setItem("profile", JSON.stringify(dataBase));
   //Add profiles to side bar
@@ -220,7 +237,7 @@ function validateForm() {
 
 //Edit
 const edit = document.querySelectorAll(".edit");
-function editProfile(i){
+function editProfile(i) {
   modal.classList.remove("hidden");
   nameInput.value = dataBase[i].name;
   roleOpt.value = dataBase[i].role;
@@ -232,13 +249,30 @@ function editProfile(i){
   dateFrom.value = dataBase[i].experiences.from;
   dateTo.value = dataBase[i].experiences.to;
   saveBtn.textContent = "Edit Profile";
-  changeModal="Edit Profile";
+  changeModal = "Edit Profile";
   tmp = i;
   imageInput.nextElementSibling.style.opacity = "0%";
 }
 //Delete
-function deleteData(i){
-  dataBase.splice(i,1);
-  localStorage.profile = JSON.stringify(dataBase);
-  showData();
+function deleteData(i) {
+  Swal.fire({
+        title: 'Are you sure?',
+        text: 'You won\'t be able to revert this!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+            );
+            dataBase.splice(i, 1);
+            localStorage.profile = JSON.stringify(dataBase);
+            showData();
+        }
+    });
 }
