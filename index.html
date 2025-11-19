@@ -76,7 +76,13 @@
         >
           Add Worker
         </h2>
-        <div><i id="x-mark" class="fa-solid fa-xmark cursor-pointer" style="color: #717171"></i></div>
+        <div>
+          <i
+            id="x-mark"
+            class="fa-solid fa-xmark cursor-pointer"
+            style="color: #717171"
+          ></i>
+        </div>
       </div>
       <div class="mt-2">
         <label for="name-input">Name:</label>
@@ -98,7 +104,8 @@
         >
           <option value="" disabled selected></option>
           <option value="Receptionist">Receptionist</option>
-          <option value="Receptionist">Manager</option>
+          <option value="Servers">servers</option>
+          <option value="Manager">Manager</option>
           <option value="IT Guy">IT Guy</option>
           <option value="Security">Security</option>
           <option value="Cleaning">Cleaning</option>
@@ -236,8 +243,11 @@
     >
       <div id="meet" class="relative flex flex-col items-center justify-center">
         <!-- First Room -->
-        <p style="text-shadow: 1px 1px 10px white,-1px -1px 10px white" class="">Conference Room</p>
+        <p style="text-shadow: 1px 1px 10px white, -1px -1px 10px white">
+          Conference Room
+        </p>
         <button
+          id="room-1"
           class="w-10 h-7 text-center bg-[#027afe] text-white rounded-md absolute bottom-3"
         >
           +
@@ -249,8 +259,11 @@
         class="relative flex flex-col items-center justify-center"
       >
         <!-- Second Room -->
-        <p style="text-shadow: 1px 1px 10px white,-1px -1px 10px white" class="">Servers Room</p>
+        <p style="text-shadow: 1px 1px 10px white, -1px -1px 10px white">
+          Servers Room
+        </p>
         <button
+          id="room-2"
           class="w-10 h-7 text-center bg-[#027afe] text-white rounded-md absolute bottom-3"
         >
           +
@@ -262,8 +275,11 @@
         class="relative flex flex-col items-center justify-center"
       >
         <!-- Third Room -->
-        <p style="text-shadow: 1px 1px 10px white,-1px -1px 10px white" class="">Security Room</p>
+        <p style="text-shadow: 1px 1px 10px white, -1px -1px 10px white">
+          Security Room
+        </p>
         <button
+          id="room-3"
           class="w-10 h-7 text-center bg-[#027afe] text-white rounded-md absolute bottom-3"
         >
           +
@@ -275,8 +291,11 @@
         class="relative flex flex-col items-center justify-center"
       >
         <!-- Fourth Room -->
-        <p style="text-shadow: 1px 1px 10px white,-1px -1px 10px white" class="">Reception</p>
+        <p style="text-shadow: 1px 1px 10px white, -1px -1px 10px white">
+          Reception
+        </p>
         <button
+          id="room-4"
           class="w-10 h-7 text-center bg-[#027afe] text-white rounded-md absolute bottom-3"
         >
           +
@@ -288,8 +307,11 @@
         class="relative flex flex-col items-center justify-center"
       >
         <!-- Fifth Room -->
-        <p style="text-shadow: 1px 1px 10px white,-1px -1px 10px white" class="">Staff Room</p>
+        <p style="text-shadow: 1px 1px 10px white, -1px -1px 10px white">
+          Staff Room
+        </p>
         <button
+          id="room-5"
           class="w-10 h-7 text-center bg-[#027afe] text-white rounded-md absolute bottom-3"
         >
           +
@@ -301,8 +323,11 @@
         class="relative flex flex-col items-center justify-center"
       >
         <!-- Sixth Room -->
-        <p style="text-shadow: 1px 1px 10px white,-1px -1px 10px white" class="">Vault</p>
+        <p style="text-shadow: 1px 1px 10px white, -1px -1px 10px white">
+          Vault
+        </p>
         <button
+          id="room-6"
           class="w-10 h-7 text-center bg-[#027afe] text-white rounded-md absolute bottom-3"
         >
           +
@@ -312,9 +337,9 @@
     </div>
     <!-- Second Modal -->
     <div
-      id="modal"
-      style="z-index: 100; scrollbar-width: thin; scrollbar-color: gray #fff"
-      class="hidden fixed top-0 right-0 bottom-0 left-0 shadow-md overflow-auto bg-[#fff] w-[450px] mt-8 mb-8 ml-auto mr-auto p-4 rounded-lg text-gray-600"
+      id="staff-modal"
+      style="z-index: 101; scrollbar-width: thin; scrollbar-color: gray #fff"
+      class="hidden fixed top-0 right-0 bottom-0 left-0 shadow-md overflow-auto bg-[#fff] w-[600px] mt-8 mb-8 ml-auto mr-auto p-4 rounded-lg text-gray-600"
     >
       <div class="flex justify-between border-b p-2 pb-6 border-gray-300">
         <h2
@@ -322,8 +347,17 @@
         >
           Select Worker to Assign
         </h2>
-        <div><i id="x-mark" class="fa-solid fa-xmark cursor-pointer" style="color: #717171"></i></div>
+        <div>
+          <i
+            id="x-mark2"
+            class="fa-solid fa-xmark cursor-pointer"
+            style="color: #717171"
+          ></i>
+        </div>
       </div>
+      <!-- Cards -->
+      <div id="displayCards" class="flex flex-wrap"></div>
+      <!-- EndOfCards -->
     </div>
   </body>
 </html>

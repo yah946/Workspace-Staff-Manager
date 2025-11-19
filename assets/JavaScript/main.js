@@ -1,10 +1,19 @@
-const urlInput = document.getElementById('url-input');
+const urlInput = document.getElementById("url-input");
 const openModal = document.getElementById("open-modal");
 const modal = document.getElementById("modal");
 const saveBtn = document.getElementById("save-btn");
 const xMark = document.getElementById("x-mark");
+const xMark2 = document.getElementById("x-mark2");
 const newExperience = document.getElementById("new-experience");
 const Experiences = document.getElementById("Experiences");
+const btnMeet = document.getElementById("room-1");
+const btnServers = document.getElementById("room-2");
+const btnSecurty = document.getElementById("room-3");
+const btnReception = document.getElementById("room-4");
+const btnStaff = document.getElementById("room-5");
+const btnVault = document.getElementById("room-6");
+const staffModal = document.getElementById("staff-modal");
+const displayCards = document.getElementById("displayCards");
 let changeModal = "Save Worker";
 let tmp;
 // Open Model
@@ -12,9 +21,10 @@ openModal.addEventListener("click", function () {
   modal.classList.remove("hidden");
 });
 //Close Model
-[saveBtn.nextElementSibling, xMark].forEach((i) =>
+[saveBtn.nextElementSibling, xMark, xMark2].forEach((i) =>
   i.addEventListener("click", function () {
     modal.classList.add("hidden");
+    staffModal.classList.add("hidden");
     //Clear all inputs
     for (let i = 0; i < inputs.length; i++) {
       inputs[i].value = "";
@@ -68,8 +78,8 @@ newExperience.addEventListener("click", function () {
 // uploadimage
 const imageInput = document.getElementById("image-input");
 imageInput.addEventListener("change", function (e) {
-  urlInput.disabled=true;
-  urlInput.classList.add('cursor-not-allowed')
+  urlInput.disabled = true;
+  urlInput.classList.add("cursor-not-allowed");
   const fichierSelectionne = e.target.files[0];
   if (!fichierSelectionne) return;
   const reader = new FileReader();
@@ -82,15 +92,15 @@ imageInput.addEventListener("change", function (e) {
 });
 const img = document.getElementById("img");
 //End of uploadImage
-urlInput.addEventListener('input',function(){
-  if(urlInput.value!=''){
+urlInput.addEventListener("input", function () {
+  if (urlInput.value != "") {
     imageInput.disabled = true;
-    imageInput.nextElementSibling.classList.add('cursor-not-allowed');
-  }else{
+    imageInput.nextElementSibling.classList.add("cursor-not-allowed");
+  } else {
     imageInput.disabled = false;
-    imageInput.nextElementSibling.classList.remove('cursor-not-allowed');
+    imageInput.nextElementSibling.classList.remove("cursor-not-allowed");
   }
-})
+});
 
 const container = document.getElementById("container");
 const nameInput = document.getElementById("name-input");
@@ -256,23 +266,146 @@ function editProfile(i) {
 //Delete
 function deleteData(i) {
   Swal.fire({
-        title: 'Are you sure?',
-        text: 'You won\'t be able to revert this!',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success'
-            );
-            dataBase.splice(i, 1);
-            localStorage.profile = JSON.stringify(dataBase);
-            showData();
-        }
-    });
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire("Deleted!", "Your file has been deleted.", "success");
+      dataBase.splice(i, 1);
+      localStorage.profile = JSON.stringify(dataBase);
+      showData();
+    }
+  });
 }
+
+// [btnMeet, btnServers, btnSecurty, btnReception, btnStaff, btnVault].forEach(
+//   (i) =>
+//     i.addEventListener("click", function () {
+//       let obj = {
+//         "room-1": {
+//           role: "Reception",
+//           room: "Reception",
+//         },
+//         "room-2": {
+//           role: "Manager",
+//           room: "Reception",
+//         },
+//         "room-3": {
+//           role: "IT Guy",
+//           room: "Reception",
+//         },
+//         "room-4": {
+//           role: "Security",
+//           room: "Reception",
+//         },
+//         "room-5": {
+//           role: "Cleaning",
+//           room: "Reception",
+//         },
+//         "room-6": {
+//           role: "Other",
+//           room: "Reception",
+//         },
+//       };
+//       let modalBase = dataBase.filter((item) =>
+//         item.role.toLowerCase().includes(obj.role.toLowerCase())
+//       );
+//       staffModal.classList.remove("hidden");
+//       inModal();
+//     })
+// );
+// function inModal() {
+//   let container = "";
+//   for (let i = 0; i < dataBase.length; i++) {
+//     container += `<div
+//             id="profile"
+//             class="flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-64 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
+//           >
+//             <div>
+//               <img
+//                 src="${modalBase[i].img}"
+//                 class="border-[#007afc] border-2 w-12 h-12 rounded-[50%]"
+//               />
+//             </div>
+//             <div>
+//               <h2 class="font-bold">${modalBase[i].name}</h2>
+//               <p class="text-gray-400">${modalBase[i].role}</p>
+//             </div>
+//             <div class="flex gap-2">
+//                 <span onclick="editProfile(${i})" class="active:border-2 active:border-black border-2 border-yellow-400 bg-yellow-400 p-1 rounded-lg inline-block text-transparent bg-clip-text"><i class="fa-solid fa-pen"></i></span>
+//                 <span onclick="deleteData(${i})" class="active:border-2 active:border-black border-2 border-red-400 bg-red-400 p-1 rounded-lg inline-block text-transparent bg-clip-text"><i class="fa-solid fa-trash"></i></span>
+//             </div>
+//           </div>`;
+//   }
+//   container.innerHTML = container;
+// }
+const roles = [
+  "security",
+  "manager",
+  "Receptionist",
+  "Cleaning",
+  "Other roles",
+  "IT Guy",
+  "Servers",
+];
+function showDataInModal(roles) {
+  let filtredDatabase = dataBase.filter((item) =>
+    roles.some((cond) => item.role.toLowerCase().includes(cond.toLowerCase()))
+  );
+  let container = "";
+  for (let i = 0; i < filtredDatabase.length; i++) {
+    container += `<div
+              id="profile"
+              class="flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-64 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
+            >
+              <div>
+                <img
+                  src="${filtredDatabase[i].img}"
+                  class="border-[#007afc] border-2 w-12 h-12 rounded-[50%]"
+                />
+              </div>
+              <div>
+                <h2 class="font-bold">${filtredDatabase[i].name}</h2>
+                <p class="text-gray-400">${filtredDatabase[i].role}</p>
+              </div>
+              <div class="flex gap-2">
+                  <span onclick="editProfile(${i})" class="active:border-2 active:border-black border-2 border-[#007afc] bg-[#007afc] p-1 rounded-lg inline-block text-transparent bg-clip-text"><i class="fa-solid fa-plus"></i></span>
+                  <span onclick="deleteData(${i})" class="active:border-2 active:border-black border-2 border-red-400 bg-red-400 p-1 rounded-lg inline-block text-transparent bg-clip-text"><i class="fa-solid fa-trash"></i></span>
+              </div>
+            </div>`;
+    displayCards.innerHTML = container;
+  }
+}
+let roomsM = {
+  meet: roles,
+  receptoin: [roles[1], roles[2], roles[3]],
+  security: [roles[0], roles[1]],
+  servers: [roles[1], roles[6]],
+  vault: roles,
+  staff: roles,
+};
+function opnenStaffModal(condition) {
+  staffModal.classList.remove("hidden");
+  showDataInModal(roomsM[condition]);
+}
+btnMeet.addEventListener("click", () => opnenStaffModal("meet"));
+btnReception.addEventListener("click", function () {
+  opnenStaffModal("receptoin");
+});
+btnSecurty.addEventListener("click", function () {
+  opnenStaffModal("security");
+});
+btnServers.addEventListener("click", function () {
+  opnenStaffModal("servers");
+});
+btnVault.addEventListener("click", function () {
+  opnenStaffModal("vault");
+});
+btnStaff.addEventListener("click", function () {
+  opnenStaffModal("staff");
+});
