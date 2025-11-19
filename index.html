@@ -42,9 +42,9 @@
       id="side-bar"
       class="h-screen w-80 bg-[#fff] shadow-xl pt-4 flex justify-center"
     >
-      <div>
+      <div class="side-bar--container">
         <h2
-          class="bg-gradient-to-r from-blue-500 via-[#007afc] to-cyan-600 inline-block text-transparent bg-clip-text font-bold text-[24px]"
+          class="staffmember bg-gradient-to-r from-blue-500 via-[#007afc] to-cyan-600 inline-block text-transparent bg-clip-text font-bold text-[24px]"
         >
           Staff Members
         </h2>
@@ -68,7 +68,7 @@
     <div
       id="modal"
       style="z-index: 100; scrollbar-width: thin; scrollbar-color: gray #fff"
-      class="hidden fixed top-0 right-0 bottom-0 left-0 shadow-md overflow-auto bg-[#fff] w-[450px] mt-8 mb-8 ml-auto mr-auto p-4 rounded-lg text-gray-600"
+      class="hidden h-[475px] fixed top-0 right-0 bottom-0 left-0 shadow-md overflow-auto bg-[#fff] w-[450px] mt-8 mb-8 ml-auto mr-auto p-4 rounded-lg text-gray-600"
     >
       <div class="flex justify-between border-b p-2 pb-6 border-gray-300">
         <h2
@@ -104,7 +104,7 @@
         >
           <option value="" disabled selected></option>
           <option value="Receptionist">Receptionist</option>
-          <option value="Servers">servers</option>
+          <option value="Servers">Servers</option>
           <option value="Manager">Manager</option>
           <option value="IT Guy">IT Guy</option>
           <option value="Security">Security</option>
@@ -239,13 +239,27 @@
     <!-- Workspace -->
     <div
       id="workspace-container"
-      class="z-3 bg-[url(./assets/images/workspace.jpg)] w-[840px] h-[475px] m-auto mr-14 rounded-lg bg-cover bg-center"
+      class="relative z-3 bg-[url(./assets/images/workspace.jpg)] w-[840px] h-[475px] m-auto mr-14 rounded-lg bg-cover bg-center"
     >
       <div id="meet" class="relative flex flex-col items-center justify-center">
         <!-- First Room -->
-        <p style="text-shadow: 1px 1px 10px white, -1px -1px 10px white">
+        <p style="text-shadow: 1px 1px 10px white, -1px -1px 10px white"
+        class="absolute">
           Conference Room
         </p>
+        <div class="w-[300px] h-[158px] bg-red-500 overflow-auto">
+          <!-- <div
+              id="profile"
+              style="z-index: 99;"
+              class="relative flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-44 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
+            >
+              <span class="absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center hover:size-5"><i class="fa-solid fa-xmark"></i></span>
+              <div>
+                <h2 class="font-bold">${filtredDatabase[i].name}</h2>
+                <p class="text-gray-400">${filtredDatabase[i].role}</p>
+              </div>
+          </div> -->
+        </div>
         <button
           id="room-1"
           class="w-10 h-7 text-center bg-[#027afe] text-white rounded-md absolute bottom-3"
@@ -339,7 +353,7 @@
     <div
       id="staff-modal"
       style="z-index: 101; scrollbar-width: thin; scrollbar-color: gray #fff"
-      class="hidden fixed top-0 right-0 bottom-0 left-0 shadow-md overflow-auto bg-[#fff] w-[600px] mt-8 mb-8 ml-auto mr-auto p-4 rounded-lg text-gray-600"
+      class="hidden h-96 fixed top-0 right-0 bottom-0 left-0 shadow-md overflow-auto bg-[#fff] w-[600px] mt-8 mb-8 ml-auto mr-auto p-4 rounded-lg text-gray-600"
     >
       <div class="flex justify-between border-b p-2 pb-6 border-gray-300">
         <h2

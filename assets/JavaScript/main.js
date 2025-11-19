@@ -122,9 +122,9 @@ if (localStorage.profile != null) {
 function showData() {
   let table = "";
   for (let i = 0; i < dataBase.length; i++) {
-    table += `<div
+    table += `<div id-index = "${dataBase[i].id}"
             id="profile"
-            class="flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-64 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
+            class="compt flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-64 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
           >
             <div>
               <img
@@ -144,12 +144,14 @@ function showData() {
   }
   container.innerHTML = table;
 }
+const profileId = document.querySelectorAll('#profile')
 saveBtn.addEventListener("click", function () {
   // if (!validateForm()) {
   //   return;
   // }
   // Save new profiles to localStorage
   let newProfile = {
+    id: Math.random(),
     name: nameInput.value,
     role: roleOpt.value,
     img: img.src,
@@ -283,129 +285,144 @@ function deleteData(i) {
   });
 }
 
-// [btnMeet, btnServers, btnSecurty, btnReception, btnStaff, btnVault].forEach(
-//   (i) =>
-//     i.addEventListener("click", function () {
-//       let obj = {
-//         "room-1": {
-//           role: "Reception",
-//           room: "Reception",
-//         },
-//         "room-2": {
-//           role: "Manager",
-//           room: "Reception",
-//         },
-//         "room-3": {
-//           role: "IT Guy",
-//           room: "Reception",
-//         },
-//         "room-4": {
-//           role: "Security",
-//           room: "Reception",
-//         },
-//         "room-5": {
-//           role: "Cleaning",
-//           room: "Reception",
-//         },
-//         "room-6": {
-//           role: "Other",
-//           room: "Reception",
-//         },
-//       };
-//       let modalBase = dataBase.filter((item) =>
-//         item.role.toLowerCase().includes(obj.role.toLowerCase())
-//       );
-//       staffModal.classList.remove("hidden");
-//       inModal();
-//     })
-// );
-// function inModal() {
+// const roles = [
+//   "security",
+//   "manager",
+//   "Receptionist",
+//   "Cleaning",
+//   "Other roles",
+//   "IT Guy",
+//   "Servers",
+// ];
+// function showDataInModal(roles) {
+//   let filtredDatabase = dataBase.filter((item) =>
+//     roles.some((cond) => item.role.toLowerCase().includes(cond.toLowerCase()))
+//   );
 //   let container = "";
-//   for (let i = 0; i < dataBase.length; i++) {
+//   for (let i = 0; i < filtredDatabase.length; i++) {
 //     container += `<div
-//             id="profile"
-//             class="flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-64 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
-//           >
-//             <div>
-//               <img
-//                 src="${modalBase[i].img}"
-//                 class="border-[#007afc] border-2 w-12 h-12 rounded-[50%]"
-//               />
-//             </div>
-//             <div>
-//               <h2 class="font-bold">${modalBase[i].name}</h2>
-//               <p class="text-gray-400">${modalBase[i].role}</p>
-//             </div>
-//             <div class="flex gap-2">
-//                 <span onclick="editProfile(${i})" class="active:border-2 active:border-black border-2 border-yellow-400 bg-yellow-400 p-1 rounded-lg inline-block text-transparent bg-clip-text"><i class="fa-solid fa-pen"></i></span>
-//                 <span onclick="deleteData(${i})" class="active:border-2 active:border-black border-2 border-red-400 bg-red-400 p-1 rounded-lg inline-block text-transparent bg-clip-text"><i class="fa-solid fa-trash"></i></span>
-//             </div>
-//           </div>`;
+//               id="profile"
+//               class="flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-64 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
+//             >
+//               <div>
+//                 <img
+//                   src="${filtredDatabase[i].img}"
+//                   class="border-[#007afc] border-2 w-12 h-12 rounded-[50%]"
+//                 />
+//               </div>
+//               <div>
+//                 <h2 class="font-bold">${filtredDatabase[i].name}</h2>
+//                 <p class="text-gray-400">${filtredDatabase[i].role}</p>
+//               </div>
+//               <div class="flex gap-2">
+//                   <span onclick="addProfile(${i})" class="active:border-2 active:border-black border-2 border-[#007afc] bg-[#007afc] p-1 rounded-lg inline-block text-transparent bg-clip-text"><i class="fa-solid fa-plus"></i></span>
+//                   <span onclick="deleteData(${i})" class="active:border-2 active:border-black border-2 border-red-400 bg-red-400 p-1 rounded-lg inline-block text-transparent bg-clip-text"><i class="fa-solid fa-trash"></i></span>
+//               </div>
+//             </div>`;
+//     displayCards.innerHTML = container;
 //   }
-//   container.innerHTML = container;
 // }
-const roles = [
-  "security",
-  "manager",
-  "Receptionist",
-  "Cleaning",
-  "Other roles",
-  "IT Guy",
-  "Servers",
-];
-function showDataInModal(roles) {
-  let filtredDatabase = dataBase.filter((item) =>
-    roles.some((cond) => item.role.toLowerCase().includes(cond.toLowerCase()))
-  );
-  let container = "";
-  for (let i = 0; i < filtredDatabase.length; i++) {
-    container += `<div
+// let roomsM = {
+//   meet: roles,
+//   receptoin: [roles[1], roles[2], roles[3]],
+//   security: [roles[0], roles[1]],
+//   servers: [roles[1], roles[6]],
+//   vault: roles,
+//   staff: roles,
+// };
+// function opnenStaffModal(condition) {
+//   staffModal.classList.remove("hidden");
+//   showDataInModal(roomsM[condition]);
+// }
+// btnMeet.addEventListener("click", () => opnenStaffModal("meet"));
+// btnReception.addEventListener("click", function () {
+//   opnenStaffModal("receptoin");
+// });
+// btnSecurty.addEventListener("click", function () {
+//   opnenStaffModal("security");
+// });
+// btnServers.addEventListener("click", function () {
+//   opnenStaffModal("servers");
+// });
+// btnVault.addEventListener("click", function () {
+//   opnenStaffModal("vault");
+// });
+// btnStaff.addEventListener("click", function () {
+//   opnenStaffModal("staff");
+// });
+// function addProfile(i){
+//   dataBase.splice(i,1);
+//   btnMeet.nextElementSibling.innerHTML+=`<div
+//               id="profile"
+//               style="z-index: 99;"
+//               class="relative flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-44 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
+//             >
+//               <span class="absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center hover:size-5"><i class="fa-solid fa-xmark"></i></span>
+//               <div>
+//                 <h2 class="font-bold">${filtredDatabase[i].name}</h2>
+//                 <p class="text-gray-400">${filtredDatabase[i].role}</p>
+//               </div>
+//           </div>`
+//   staffModal.classList.add("hidden");
+// }
+  const compt = document.querySelectorAll(".compt");
+[btnMeet,btnReception,btnSecurty,btnServers,btnStaff,btnVault].forEach((i) => i.addEventListener('click',function(){
+  staffModal.classList.remove('hidden');
+}));
+let filteredDatabase = [];
+if(localStorage.filtred!=null){
+  filteredDatabase = JSON.parse(localStorage.filtred);
+}else{
+  filteredDatabase = dataBase.filter(i => i.role.toLowerCase() == 'Receptionist'.toLowerCase());
+}
+function showDataInModal(){
+for(let i=0;i<filteredDatabase.length;i++){
+displayCards.innerHTML += `<div
+                id-index = "${compt[i].getAttribute("id-index")}"
               id="profile"
               class="flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-64 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
             >
               <div>
                 <img
-                  src="${filtredDatabase[i].img}"
+                  src="${filteredDatabase[i].img}"
                   class="border-[#007afc] border-2 w-12 h-12 rounded-[50%]"
                 />
               </div>
               <div>
-                <h2 class="font-bold">${filtredDatabase[i].name}</h2>
-                <p class="text-gray-400">${filtredDatabase[i].role}</p>
+                <h2 class="font-bold">${filteredDatabase[i].name}</h2>
+                <p class="text-gray-400">${filteredDatabase[i].role}</p>
               </div>
               <div class="flex gap-2">
-                  <span onclick="editProfile(${i})" class="active:border-2 active:border-black border-2 border-[#007afc] bg-[#007afc] p-1 rounded-lg inline-block text-transparent bg-clip-text"><i class="fa-solid fa-plus"></i></span>
+                  <span onclick="addProfile(${i})" class="active:border-2 active:border-black border-2 border-[#007afc] bg-[#007afc] p-1 rounded-lg inline-block text-transparent bg-clip-text"><i class="fa-solid fa-plus"></i></span>
                   <span onclick="deleteData(${i})" class="active:border-2 active:border-black border-2 border-red-400 bg-red-400 p-1 rounded-lg inline-block text-transparent bg-clip-text"><i class="fa-solid fa-trash"></i></span>
               </div>
-            </div>`;
-    displayCards.innerHTML = container;
+            </div>`
+}
+}
+showDataInModal();
+function addProfile(id){
+  staffModal.classList.add('hidden');
+  showDataInModal();
+  btnMeet.previousElementSibling.innerHTML += `<div
+              id-index=""
+              id="profile"
+              class="relative flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-44 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
+            >
+              <span id="x-mark-cards" class="absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark"></i></span>
+              <div>
+                <h2 class="font-bold">${filteredDatabase[id].name}</h2>
+                <p class="text-gray-400">${filteredDatabase[id].role}</p>
+              </div>
+          </div>`
+  localStorage.setItem("filtred", JSON.stringify(filteredDatabase));
+  // dataBase.splice(filteredDatabase[id].id, 1);
+compt.forEach((com,index) =>{
+  const stockindex = com.getAttribute("id-index")
+  if(filteredDatabase[id].id == stockindex ){
+    dataBase.splice(index,1);
   }
+})
+  // console.log(dataBase.indexOf(filteredDatabase[id].id))
+  localStorage.profile = JSON.stringify(dataBase);
+  showData();
 }
-let roomsM = {
-  meet: roles,
-  receptoin: [roles[1], roles[2], roles[3]],
-  security: [roles[0], roles[1]],
-  servers: [roles[1], roles[6]],
-  vault: roles,
-  staff: roles,
-};
-function opnenStaffModal(condition) {
-  staffModal.classList.remove("hidden");
-  showDataInModal(roomsM[condition]);
-}
-btnMeet.addEventListener("click", () => opnenStaffModal("meet"));
-btnReception.addEventListener("click", function () {
-  opnenStaffModal("receptoin");
-});
-btnSecurty.addEventListener("click", function () {
-  opnenStaffModal("security");
-});
-btnServers.addEventListener("click", function () {
-  opnenStaffModal("servers");
-});
-btnVault.addEventListener("click", function () {
-  opnenStaffModal("vault");
-});
-btnStaff.addEventListener("click", function () {
-  opnenStaffModal("staff");
-});
