@@ -164,6 +164,14 @@ saveBtn.addEventListener("click", function () {
       to: dateTo.value,
     },
   };
+  if(dateFrom.value>=dateTo.value){
+    document.getElementById('date-f-input-error').textContent="Impossible !!";
+    roleInput.value = dataBase[i].experiences.role;
+    dateFrom.value = dataBase[i].experiences.from;
+  }else{
+    modal.classList.add("hidden");
+    document.getElementById('date-f-input-error').textContent="";
+  }
   if (changeModal === "Save Worker") {
     dataBase.push(newProfile);
   } else {
@@ -174,7 +182,6 @@ saveBtn.addEventListener("click", function () {
   localStorage.setItem("profile", JSON.stringify(dataBase));
   //Add profiles to side bar
   showData();
-  modal.classList.add("hidden");
   //Clear all inputs
   for (let i = 0; i < inputs.length; i++) {
     inputs[i].value = "";
