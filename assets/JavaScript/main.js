@@ -203,9 +203,6 @@ saveBtn.addEventListener("click", function () {
     localisation: "Unassigned",
     sideBar: true,
   };
-  // for (let i = 0; i < count; i++) {
-  //   newProfile.experiences.company.push(companyInput[i].value);
-  // }
   if (dateFrom.value > dateTo.value) {
     document.getElementById("date-f-input-error").textContent = "Impossible !!";
     roleInput.value = dataBase[i].experiences.role;
