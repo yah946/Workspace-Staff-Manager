@@ -4,7 +4,10 @@ const modal = document.getElementById("modal");
 const saveBtn = document.getElementById("save-btn");
 const xMark = document.getElementById("x-mark");
 const xMark2 = document.getElementById("x-mark2");
+const xMark3 = document.getElementById("x-mark3");
+const modalInfo = document.getElementById("modal-info");
 const newExperience = document.getElementById("new-experience");
+const removeExperience = document.getElementById("remove-experience");
 const Experiences = document.getElementById("Experiences");
 const btnMeet = document.getElementById("room-1");
 const btnServers = document.getElementById("room-2");
@@ -21,27 +24,36 @@ openModal.addEventListener("click", function () {
   modal.classList.remove("hidden");
 });
 //Close Model
-[saveBtn.nextElementSibling, xMark, xMark2].forEach((i) =>
-  i.addEventListener("click", function () {
-    modal.classList.add("hidden");
-    staffModal.classList.add("hidden");
-    //Clear all inputs
-    for (let i = 0; i < inputs.length; i++) {
-      inputs[i].value = "";
-    }
-    img.src = "";
-  })
-);
+xMark3.addEventListener("click", function () {
+  modalInfo.classList.add("hidden");
+});
+xMark.addEventListener("click", function () {
+  modal.classList.add("hidden");
+});
+xMark2.addEventListener("click", function () {
+  staffModal.classList.add("hidden");
+});
+saveBtn.nextElementSibling.addEventListener("click", function () {
+  modal.classList.add("hidden");
+  //Clear all inputs
+  for (let i = 0; i < inputs.length; i++) {
+    inputs[i].value = "";
+  }
+  img.src = "";
+});
 //Add new Experience fields
+let count = 1;
 newExperience.addEventListener("click", function () {
+  count++;
   const divTag = document.createElement("div");
+  divTag.classList.add("child");
   divTag.innerHTML = `<div class="mt-2 bg-[#f9f9fb] border border-gray-300 w-full py-1.5 rounded-lg p-2">
             <div>
               <label for="company-input">Company:</label>
               <input
                 id="company-input"
                 type="text"
-                class="border border-gray-600 w-full py-1.5 rounded-lg"
+                class="company-input border border-gray-600 w-full py-1.5 rounded-lg"
               />
               <div id="company-input-error"></div>
             </div>
@@ -52,14 +64,14 @@ newExperience.addEventListener("click", function () {
                 type="text"
                 class="border border-gray-600 w-full py-1.5 rounded-lg"
               />
-              <div id="role-ex-input-error"></div>
+              <div id="role-ex-input role-ex-input-error"></div>
             </div>
             <div>
               <label for="date-f-input">From:</label>
               <input
                 id="date-f-input"
                 type="date"
-                class="border border-gray-600 w-full py-1.5 rounded-lg"
+                class="date-f-input border border-gray-600 w-full py-1.5 rounded-lg"
               />
               <div id="date-f-input-error"></div>
             </div>
@@ -68,12 +80,32 @@ newExperience.addEventListener("click", function () {
               <input
                 id="date-t-input"
                 type="date"
-                class="border border-gray-600 w-full py-1.5 rounded-lg"
+                class="date-t-input border border-gray-600 w-full py-1.5 rounded-lg"
               />
               <div id="date-t-input-error"></div>
             </div>
             </div>`;
   Experiences.appendChild(divTag);
+  if (count == 1) {
+    removeExperience.classList.add("hidden");
+  } else if (count >= 2) {
+    removeExperience.classList.remove("hidden");
+  }
+  return count;
+});
+removeExperience.addEventListener("click", function () {
+  count--;
+  Experiences.removeChild(
+    document.querySelectorAll(".child")[
+      document.querySelectorAll(".child").length - 1
+    ]
+  );
+  if (count == 1) {
+    removeExperience.classList.add("hidden");
+  } else if (count >= 2) {
+    removeExperience.classList.remove("hidden");
+  }
+  return count;
 });
 // uploadimage
 const imageInput = document.getElementById("image-input");
@@ -106,10 +138,6 @@ const container = document.getElementById("container");
 const nameInput = document.getElementById("name-input");
 const emailInput = document.getElementById("email-input");
 const phoneInput = document.getElementById("phone-input");
-const companyInput = document.getElementById("company-input");
-const roleInput = document.getElementById("role-ex-input");
-const dateFrom = document.getElementById("date-f-input");
-const dateTo = document.getElementById("date-t-input");
 const roleOpt = document.getElementById("role-opt");
 const inputs = document.querySelectorAll("input");
 
@@ -124,6 +152,7 @@ function showData() {
   for (let i = 0; i < dataBase.length; i++) {
     table += `<div id-index = "${dataBase[i].id}"
             id="profile"
+            onclick="allInfo(${i})"
             class="compt flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-64 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
           >
             <div>
@@ -144,7 +173,11 @@ function showData() {
   }
   container.innerHTML = table;
 }
-const profileId = document.querySelectorAll('#profile')
+const companyInput = document.getElementsByClassName("company-input");
+const roleInput = document.getElementsByClassName("role-ex-input");
+const dateFrom = document.getElementsByClassName("date-f-input");
+const dateTo = document.getElementsByClassName("date-t-input");
+const profileId = document.getElementsByClassName("#profile");
 saveBtn.addEventListener("click", function () {
   // if (!validateForm()) {
   //   return;
@@ -158,19 +191,24 @@ saveBtn.addEventListener("click", function () {
     email: emailInput.value,
     tel: phoneInput.value,
     experiences: {
-      company: companyInput.value,
-      role: roleInput.value,
-      from: dateFrom.value,
-      to: dateTo.value,
+      company: [],
+      role: [],
+      from: [],
+      to: [],
     },
+    localisation: "Unassigned",
+    sideBar: true,
   };
-  if(dateFrom.value>=dateTo.value){
-    document.getElementById('date-f-input-error').textContent="Impossible !!";
+  for (let i = 0; i < count; i++) {
+    newProfile.experiences.company.push(companyInput[i].value);
+  }
+  if (dateFrom.value >= dateTo.value) {
+    document.getElementById("date-f-input-error").textContent = "Impossible !!";
     roleInput.value = dataBase[i].experiences.role;
     dateFrom.value = dataBase[i].experiences.from;
-  }else{
+  } else {
     modal.classList.add("hidden");
-    document.getElementById('date-f-input-error').textContent="";
+    document.getElementById("date-f-input-error").textContent = "";
   }
   if (changeModal === "Save Worker") {
     dataBase.push(newProfile);
@@ -291,145 +329,142 @@ function deleteData(i) {
     }
   });
 }
-
-// const roles = [
-//   "security",
-//   "manager",
-//   "Receptionist",
-//   "Cleaning",
-//   "Other roles",
-//   "IT Guy",
-//   "Servers",
-// ];
-// function showDataInModal(roles) {
-//   let filtredDatabase = dataBase.filter((item) =>
-//     roles.some((cond) => item.role.toLowerCase().includes(cond.toLowerCase()))
-//   );
-//   let container = "";
-//   for (let i = 0; i < filtredDatabase.length; i++) {
-//     container += `<div
-//               id="profile"
-//               class="flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-64 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
-//             >
-//               <div>
-//                 <img
-//                   src="${filtredDatabase[i].img}"
-//                   class="border-[#007afc] border-2 w-12 h-12 rounded-[50%]"
-//                 />
-//               </div>
-//               <div>
-//                 <h2 class="font-bold">${filtredDatabase[i].name}</h2>
-//                 <p class="text-gray-400">${filtredDatabase[i].role}</p>
-//               </div>
-//               <div class="flex gap-2">
-//                   <span onclick="addProfile(${i})" class="active:border-2 active:border-black border-2 border-[#007afc] bg-[#007afc] p-1 rounded-lg inline-block text-transparent bg-clip-text"><i class="fa-solid fa-plus"></i></span>
-//                   <span onclick="deleteData(${i})" class="active:border-2 active:border-black border-2 border-red-400 bg-red-400 p-1 rounded-lg inline-block text-transparent bg-clip-text"><i class="fa-solid fa-trash"></i></span>
-//               </div>
-//             </div>`;
-//     displayCards.innerHTML = container;
-//   }
-// }
-// let roomsM = {
-//   meet: roles,
-//   receptoin: [roles[1], roles[2], roles[3]],
-//   security: [roles[0], roles[1]],
-//   servers: [roles[1], roles[6]],
-//   vault: roles,
-//   staff: roles,
-// };
-// function opnenStaffModal(condition) {
-//   staffModal.classList.remove("hidden");
-//   showDataInModal(roomsM[condition]);
-// }
-// btnMeet.addEventListener("click", () => opnenStaffModal("meet"));
-// btnReception.addEventListener("click", function () {
-//   opnenStaffModal("receptoin");
-// });
-// btnSecurty.addEventListener("click", function () {
-//   opnenStaffModal("security");
-// });
-// btnServers.addEventListener("click", function () {
-//   opnenStaffModal("servers");
-// });
-// btnVault.addEventListener("click", function () {
-//   opnenStaffModal("vault");
-// });
-// btnStaff.addEventListener("click", function () {
-//   opnenStaffModal("staff");
-// });
-// function addProfile(i){
-//   dataBase.splice(i,1);
-//   btnMeet.nextElementSibling.innerHTML+=`<div
-//               id="profile"
-//               style="z-index: 99;"
-//               class="relative flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-44 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
-//             >
-//               <span class="absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center hover:size-5"><i class="fa-solid fa-xmark"></i></span>
-//               <div>
-//                 <h2 class="font-bold">${filtredDatabase[i].name}</h2>
-//                 <p class="text-gray-400">${filtredDatabase[i].role}</p>
-//               </div>
-//           </div>`
-//   staffModal.classList.add("hidden");
-// }
-  const compt = document.querySelectorAll(".compt");
-[btnMeet,btnReception,btnSecurty,btnServers,btnStaff,btnVault].forEach((i) => i.addEventListener('click',function(){
-  staffModal.classList.remove('hidden');
-}));
-let filteredDatabase = [];
-if(localStorage.filtred!=null){
-  filteredDatabase = JSON.parse(localStorage.filtred);
-}else{
-  filteredDatabase = dataBase.filter(i => i.role.toLowerCase() == 'Receptionist'.toLowerCase());
+let profile = document.querySelectorAll("profile");
+function allInfo(i) {
+  modalInfo.classList.remove("hidden");
+  document.getElementById("container-info").innerHTML = `
+  <!-- Image + Name + Role -->
+      <div class="ml-4 flex gap-6">
+        <img src="${dataBase[i].img}" class="border-[#007afc] w-28 h-28 rounded-[50%] border-4"/>
+        <div>
+          <p class="text-[24px] font-bold">${dataBase[i].name}</p>
+          <p class="text-[#007afc] font-bold">${dataBase[i].role}</p>
+        </div>
+      </div>
+      <!-- Email + Tel + Location -->
+      <div class="bg-gray-100 rounded-lg p-4">
+        <p class="text-gray-600"><span class="font-bold text-black">Email: </span>${dataBase[i].email}</p>
+        <p class="text-gray-600"><span class="font-bold text-black">Phone: </span>${dataBase[i].tel}</p>
+        <p class="text-gray-600"><span class="font-bold text-black">Current Location: </span>${dataBase[i].localisation}</p>
+      </div>
+      <div id="c"></div>`;
+  let work = "";
+  console.log(`lenght is : ${dataBase[i].experiences.company.length}`);
+  console.log(`company is : ${dataBase[i].experiences.company}`);
+  for (let j = 0; j < dataBase[i].experiences.company.length; j++) {
+    work += `<!-- Work Experiences -->
+        <p class="font-bold">Work Experience</p>
+        <div class="border shadow-md rounded-lg p-4">
+          <p class="text-[#007afc] font-bold"></p>
+          <p class="text-gray-600"><span class="font-bold text-black">Role: </span></p>
+          <p class="text-gray-600"><span class="font-bold text-black">Period: </span></p>
+        </div>`;
+  }
+  document.getElementById("c").innerHTML = work;
 }
-function showDataInModal(){
-for(let i=0;i<filteredDatabase.length;i++){
-displayCards.innerHTML += `<div
+
+const compt = document.querySelectorAll(".compt");
+[btnMeet, btnReception, btnSecurty, btnServers, btnStaff, btnVault].forEach(
+  (i) =>
+    i.addEventListener("click", function () {
+      staffModal.classList.remove("hidden");
+    })
+);
+let currentFiltered = [];
+function showDataInModal(filtred) {
+  currentFiltered = filtred;
+  displayCards.innerHTML = "";
+  for (let i = 0; i < filtred.length; i++) {
+    // if (!filteredDatabase || !Array.isArray(filteredDatabase)) {
+    //   console.error(
+    //     "showDataInModal ERROR: filteredDatabase is",
+    //     filteredDatabase
+    //   );
+    //   return;
+    // }
+    displayCards.innerHTML += `<div
                 id-index = "${compt[i].getAttribute("id-index")}"
               id="profile"
-              class="flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-64 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
+              class="opacity-100 flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-64 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
             >
               <div>
                 <img
-                  src="${filteredDatabase[i].img}"
+                  src="${filtred[i].img}"
                   class="border-[#007afc] border-2 w-12 h-12 rounded-[50%]"
                 />
               </div>
               <div>
-                <h2 class="font-bold">${filteredDatabase[i].name}</h2>
-                <p class="text-gray-400">${filteredDatabase[i].role}</p>
+                <h2 class="font-bold">${filtred[i].name}</h2>
+                <p class="text-gray-400">${filtred[i].role}</p>
               </div>
               <div class="flex gap-2">
                   <span onclick="addProfile(${i})" class="active:border-2 active:border-black border-2 border-[#007afc] bg-[#007afc] p-1 rounded-lg inline-block text-transparent bg-clip-text"><i class="fa-solid fa-plus"></i></span>
                   <span onclick="deleteData(${i})" class="active:border-2 active:border-black border-2 border-red-400 bg-red-400 p-1 rounded-lg inline-block text-transparent bg-clip-text"><i class="fa-solid fa-trash"></i></span>
               </div>
-            </div>`
+            </div>`;
+  }
+  // // delete from data base in the sidebar
+  // compt.forEach((com, index) => {
+  //   const stockindex = com.getAttribute("id-index");
+  //   if (filtred[id].id == stockindex) {
+  //     dataBase.splice(index, 1);
+  //   }
+  // });
+  // localStorage.profile = JSON.stringify(dataBase);
+  // showData();
 }
-}
-showDataInModal();
-function addProfile(id){
-  staffModal.classList.add('hidden');
-  showDataInModal();
-  btnMeet.previousElementSibling.innerHTML += `<div
+let activeBtn = null;
+document.addEventListener("click", function (e) {
+  const btn = e.target.closest("button[id^='room-']");
+    if (!btn) return;
+
+    activeBtn = btn; // store the button
+
+    const id = btn.id; // "room-1", "room-2", etc.
+
+  if (id === "room-1") {
+    showDataInModal(dataBase);
+  }
+  if (id === "room-2") {
+    showDataInModal(
+      dataBase.filter((i) => i.role == "Servers" || i.role == "Manager")
+    );
+  }
+  if (id === "room-3") {
+    showDataInModal(
+      dataBase.filter((i) => i.role == "Security" || i.role == "Manager")
+    );
+  }
+  if (id === "room-4") {
+    showDataInModal(
+      dataBase.filter((i) => i.role == "Receptionist" || i.role == "Manager")
+    );
+  }
+  if (id === "room-5") {
+    showDataInModal(dataBase);
+  }
+  if (id === "room-6") {
+    showDataInModal(dataBase.filter((i) => i.role == "Manager"));
+  }
+});
+function addProfile(id) {
+  staffModal.classList.add("hidden");
+  activeBtn.previousElementSibling.innerHTML += `<div
               id-index=""
               id="profile"
               class="relative flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-44 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
             >
-              <span id="x-mark-cards" class="absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark"></i></span>
+              <span onclick="deleteFromRoom" id="x-mark-cards" class="absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark"></i></span>
               <div>
-                <h2 class="font-bold">${filteredDatabase[id].name}</h2>
-                <p class="text-gray-400">${filteredDatabase[id].role}</p>
+                <h2 class="font-bold">${currentFiltered[id].name}</h2>
+                <p class="text-gray-400">${currentFiltered[id].localisation}</p>
               </div>
-          </div>`
-  localStorage.setItem("filtred", JSON.stringify(filteredDatabase));
-  // dataBase.splice(filteredDatabase[id].id, 1);
-compt.forEach((com,index) =>{
-  const stockindex = com.getAttribute("id-index")
-  if(filteredDatabase[id].id == stockindex ){
-    dataBase.splice(index,1);
-  }
-})
-  // console.log(dataBase.indexOf(filteredDatabase[id].id))
-  localStorage.profile = JSON.stringify(dataBase);
-  showData();
+          </div>`;
 }
+const deleteBtn = document.getElementById('deleteFromRoom');
+function deleteFromRoom(){
+
+}
+deleteBtn.addEventListener('click',function(){
+  
+})
