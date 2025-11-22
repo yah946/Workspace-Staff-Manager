@@ -9,6 +9,7 @@ const modalInfo = document.getElementById("modal-info");
 const newExperience = document.getElementById("new-experience");
 const removeExperience = document.getElementById("remove-experience");
 const Experiences = document.getElementById("Experiences");
+// Room's button
 const btnMeet = document.getElementById("room-1");
 const btnServers = document.getElementById("room-2");
 const btnSecurty = document.getElementById("room-3");
@@ -108,31 +109,34 @@ removeExperience.addEventListener("click", function () {
   return count;
 });
 // uploadimage
-const imageInput = document.getElementById("image-input");
-imageInput.addEventListener("change", function (e) {
-  urlInput.disabled = true;
-  urlInput.classList.add("cursor-not-allowed");
-  const fichierSelectionne = e.target.files[0];
-  if (!fichierSelectionne) return;
-  const reader = new FileReader();
-  reader.addEventListener("load", function () {
-    var hexa64form = reader.result;
-    imageInput.previousElementSibling.src = hexa64form;
-    imageInput.nextElementSibling.style.opacity = "0%";
-  });
-  reader.readAsDataURL(fichierSelectionne);
-});
+// const imageInput = document.getElementById("image-input");
+// imageInput.addEventListener("change", function (e) {
+//   urlInput.disabled = true;
+//   urlInput.classList.add("cursor-not-allowed");
+//   const fichierSelectionne = e.target.files[0];
+//   if (!fichierSelectionne) return;
+//   const reader = new FileReader();
+//   reader.addEventListener("load", function () {
+//     var hexa64form = reader.result;
+//     imageInput.previousElementSibling.src = hexa64form;
+//     imageInput.nextElementSibling.style.opacity = "0%";
+//   });
+//   reader.readAsDataURL(fichierSelectionne);
+// });
 const img = document.getElementById("img");
 //End of uploadImage
-urlInput.addEventListener("input", function () {
-  if (urlInput.value != "") {
-    imageInput.disabled = true;
-    imageInput.nextElementSibling.classList.add("cursor-not-allowed");
-  } else {
-    imageInput.disabled = false;
-    imageInput.nextElementSibling.classList.remove("cursor-not-allowed");
+urlInput.addEventListener('input',function(){
+  if(urlInput.value ===''){
+    // img.src = '';
+    document.getElementById('image-label').style.opacity = "100%";
   }
-});
+  else{
+    img.src = urlInput.value;
+    document.getElementById('image-label').style.opacity = "0%";
+  }
+
+})
+
 
 const container = document.getElementById("container");
 const nameInput = document.getElementById("name-input");
@@ -153,21 +157,21 @@ function showData() {
     table += `<div id-index = "${dataBase[i].id}"
             id="profile"
             onclick="allInfo(${i})"
-            class="compt flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-64 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
+            class="compt flex justify-evenly gap-2 items-center border border-gray-300 bg-[#f9f9fb] p-3 w-64 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
           >
             <div>
               <img
                 src="${dataBase[i].img}"
-                class="border-[#007afc] border-2 w-12 h-12 rounded-[50%]"
+                class="m-2 border-[#007afc] border-2 w-12 h-12 rounded-[50%]"
               />
             </div>
             <div>
               <h2 class="font-bold">${dataBase[i].name}</h2>
               <p class="text-gray-400">${dataBase[i].role}</p>
             </div>
-            <div class="flex gap-2">
-                <span onclick="editProfile(${i})" class="active:border-2 active:border-black border-2 border-yellow-400 bg-yellow-400 p-1 rounded-lg inline-block text-transparent bg-clip-text"><i class="fa-solid fa-pen"></i></span>
-                <span onclick="deleteData(${i})" class="active:border-2 active:border-black border-2 border-red-400 bg-red-400 p-1 rounded-lg inline-block text-transparent bg-clip-text"><i class="fa-solid fa-trash"></i></span>
+            <div class="pointer-events-auto flex gap-2">
+                <span onclick="editProfile(event,${i})" class="pointer-events-auto active:border-2 active:border-black border-2 border-yellow-400 bg-yellow-400 p-1 rounded-lg inline-block text-transparent bg-clip-text"><i class="pointer-events-auto fa-solid fa-pen"></i></span>
+                <span onclick="deleteData(event,${i})" class="pointer-events-auto active:border-2 active:border-black border-2 border-red-400 bg-red-400 p-1 rounded-lg inline-block text-transparent bg-clip-text"><i class="pointer-events-auto fa-solid fa-trash"></i></span>
             </div>
           </div>`;
   }
@@ -187,22 +191,22 @@ saveBtn.addEventListener("click", function () {
     id: Math.random(),
     name: nameInput.value,
     role: roleOpt.value,
-    img: img.src,
+    img: urlInput.value,
     email: emailInput.value,
     tel: phoneInput.value,
     experiences: {
-      company: [],
-      role: [],
-      from: [],
-      to: [],
+      company: companyInput.value,
+      role: roleInput.value,
+      from: dateFrom.value,
+      to: dateTo.value,
     },
     localisation: "Unassigned",
     sideBar: true,
   };
-  for (let i = 0; i < count; i++) {
-    newProfile.experiences.company.push(companyInput[i].value);
-  }
-  if (dateFrom.value >= dateTo.value) {
+  // for (let i = 0; i < count; i++) {
+  //   newProfile.experiences.company.push(companyInput[i].value);
+  // }
+  if (dateFrom.value > dateTo.value) {
     document.getElementById("date-f-input-error").textContent = "Impossible !!";
     roleInput.value = dataBase[i].experiences.role;
     dateFrom.value = dataBase[i].experiences.from;
@@ -294,7 +298,8 @@ function validateForm() {
 
 //Edit
 const edit = document.querySelectorAll(".edit");
-function editProfile(i) {
+function editProfile(e,i) {
+  e.stopPropagation();
   modal.classList.remove("hidden");
   nameInput.value = dataBase[i].name;
   roleOpt.value = dataBase[i].role;
@@ -311,7 +316,8 @@ function editProfile(i) {
   imageInput.nextElementSibling.style.opacity = "0%";
 }
 //Delete
-function deleteData(i) {
+function deleteData(e,i) {
+  e.stopPropagation();
   Swal.fire({
     title: "Are you sure?",
     text: "You won't be able to revert this!",
@@ -349,8 +355,6 @@ function allInfo(i) {
       </div>
       <div id="c"></div>`;
   let work = "";
-  console.log(`lenght is : ${dataBase[i].experiences.company.length}`);
-  console.log(`company is : ${dataBase[i].experiences.company}`);
   for (let j = 0; j < dataBase[i].experiences.company.length; j++) {
     work += `<!-- Work Experiences -->
         <p class="font-bold">Work Experience</p>
@@ -362,109 +366,161 @@ function allInfo(i) {
   }
   document.getElementById("c").innerHTML = work;
 }
-
-const compt = document.querySelectorAll(".compt");
-[btnMeet, btnReception, btnSecurty, btnServers, btnStaff, btnVault].forEach(
-  (i) =>
-    i.addEventListener("click", function () {
-      staffModal.classList.remove("hidden");
-    })
-);
-let currentFiltered = [];
-function showDataInModal(filtred) {
-  currentFiltered = filtred;
-  displayCards.innerHTML = "";
-  for (let i = 0; i < filtred.length; i++) {
-    // if (!filteredDatabase || !Array.isArray(filteredDatabase)) {
-    //   console.error(
-    //     "showDataInModal ERROR: filteredDatabase is",
-    //     filteredDatabase
-    //   );
-    //   return;
-    // }
-    displayCards.innerHTML += `<div
-                id-index = "${compt[i].getAttribute("id-index")}"
-              id="profile"
-              class="opacity-100 flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-64 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
-            >
-              <div>
-                <img
-                  src="${filtred[i].img}"
-                  class="border-[#007afc] border-2 w-12 h-12 rounded-[50%]"
-                />
-              </div>
-              <div>
-                <h2 class="font-bold">${filtred[i].name}</h2>
-                <p class="text-gray-400">${filtred[i].role}</p>
-              </div>
-              <div class="flex gap-2">
-                  <span onclick="addProfile(${i})" class="active:border-2 active:border-black border-2 border-[#007afc] bg-[#007afc] p-1 rounded-lg inline-block text-transparent bg-clip-text"><i class="fa-solid fa-plus"></i></span>
-                  <span onclick="deleteData(${i})" class="active:border-2 active:border-black border-2 border-red-400 bg-red-400 p-1 rounded-lg inline-block text-transparent bg-clip-text"><i class="fa-solid fa-trash"></i></span>
-              </div>
-            </div>`;
+// Put Staff In the Best Room
+function showDataInModal(filtred){
+  displayCards.innerHTML= '';
+  for(let i = 0 ; i<filtred.length ; i++){
+    displayCards.innerHTML += `<div id-index = "${filtred[i].id}"
+            id="profile"
+            onclick="allInfo(${i})"
+            class="compt flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-64 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
+          >
+            <div>
+              <img
+                src="${filtred[i].img}"
+                class="border-[#007afc] border-2 w-12 h-12 rounded-[50%]"
+              />
+            </div>
+            <div>
+              <h2 class="font-bold">${filtred[i].name}</h2>
+              <p class="text-gray-400">${filtred[i].role}</p>
+            </div>
+            <div class="flex gap-2">
+                <span onclick="addProfile(event,${filtred[i].id})" class="active:border-2 active:border-black border-2 border-blue-400 bg-blue-400 p-1 rounded-lg inline-block text-transparent bg-clip-text"><i class="fa-solid fa-plus"></i></span>
+            </div>
+          </div>`;
   }
-  // // delete from data base in the sidebar
-  // compt.forEach((com, index) => {
-  //   const stockindex = com.getAttribute("id-index");
-  //   if (filtred[id].id == stockindex) {
-  //     dataBase.splice(index, 1);
-  //   }
-  // });
-  // localStorage.profile = JSON.stringify(dataBase);
-  // showData();
 }
-let activeBtn = null;
-document.addEventListener("click", function (e) {
-  const btn = e.target.closest("button[id^='room-']");
-    if (!btn) return;
-
-    activeBtn = btn; // store the button
-
-    const id = btn.id; // "room-1", "room-2", etc.
-
-  if (id === "room-1") {
-    showDataInModal(dataBase);
-  }
-  if (id === "room-2") {
-    showDataInModal(
-      dataBase.filter((i) => i.role == "Servers" || i.role == "Manager")
-    );
-  }
-  if (id === "room-3") {
-    showDataInModal(
-      dataBase.filter((i) => i.role == "Security" || i.role == "Manager")
-    );
-  }
-  if (id === "room-4") {
-    showDataInModal(
-      dataBase.filter((i) => i.role == "Receptionist" || i.role == "Manager")
-    );
-  }
-  if (id === "room-5") {
-    showDataInModal(dataBase);
-  }
-  if (id === "room-6") {
-    showDataInModal(dataBase.filter((i) => i.role == "Manager"));
-  }
-});
-function addProfile(id) {
-  staffModal.classList.add("hidden");
-  activeBtn.previousElementSibling.innerHTML += `<div
-              id-index=""
+function deleteFromSideBar(find){
+  dataBase.splice(dataBase.indexOf(find),1);
+  localStorage.profile = JSON.stringify(dataBase);
+  showData();
+}
+let activeButton = null;
+btnMeet.onclick = () => activeButton = btnMeet;
+btnServers.onclick = () => activeButton = btnServers;
+btnSecurty.onclick = () => activeButton = btnSecurty;
+btnReception.onclick = () => activeButton = btnReception;
+btnStaff.onclick = () => activeButton = btnStaff;
+btnVault.onclick = () => activeButton = btnVault;
+function addProfile(e,id){
+  e.stopPropagation();
+  const i = activeButton;
+  if(i===btnMeet){
+        let filtred = dataBase;
+        let find = filtred.find(obj => obj.id === id);
+        i.previousElementSibling.innerHTML+=`
+          <div
               id="profile"
               class="relative flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-44 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
             >
-              <span onclick="deleteFromRoom" id="x-mark-cards" class="absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark"></i></span>
+              <span class="XM absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
               <div>
-                <h2 class="font-bold">${currentFiltered[id].name}</h2>
-                <p class="text-gray-400">${currentFiltered[id].localisation}</p>
+                <h2 class="font-bold">${find.name}</h2>
+                <p class="text-gray-400 text-sm">Conference Room</p>
               </div>
-          </div>`;
-}
-const deleteBtn = document.getElementById('deleteFromRoom');
-function deleteFromRoom(){
+          </div>`
+        deleteFromSideBar(find);
+      }else if(i===btnServers){
+        let filtred = dataBase.filter(i=> i.role === "Servers" || i.role === "Manager");
+        let find = filtred.find(obj => obj.id === id).name;
+        i.previousElementSibling.innerHTML+=`
+          <div
+              id="profile"
+              class="relative flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-44 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
+            >
+              <span onclick="999" class="absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
+              <div>
+                <h2 class="font-bold">${find}</h2>
+                <p class="text-gray-400 text-sm">Servers Room</p>
+              </div>
+          </div>`
+        deleteFromSideBar(find);
+          i.previousElementSibling.classList.remove('bg-red-500','opacity-25','animate-pulse');
+      }else if(i===btnSecurty){
+        let filtred = dataBase.filter(i=> i.role === "Security" || i.role === "Manager");
+        let find = filtred.find(obj => obj.id === id).name;
+        i.previousElementSibling.innerHTML+=`
+          <div
+              id="profile"
+              class="relative flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-44 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
+            >
+              <span onclick="999" class="absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
+              <div>
+                <h2 class="font-bold">${find}</h2>
+                <p class="text-gray-400 text-sm">Security Room</p>
+              </div>
+          </div>`
+        deleteFromSideBar(find);
+          i.previousElementSibling.classList.remove('bg-red-500','opacity-25','animate-pulse');
+      }else if(i===btnReception){
+        let filtred = dataBase.filter(i=> i.role === "Receptionist" || i.role === "Manager");
+        let find = filtred.find(obj => obj.id === id).name;
+        i.previousElementSibling.innerHTML+=`
+          <div
+              id="profile"
+              class="relative flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-44 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
+            >
+              <span onclick="999" class="absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
+              <div>
+                <h2 class="font-bold">${find}</h2>
+                <p class="text-gray-400 text-sm">Reception Room</p>
+              </div>
+          </div>`
+          deleteFromSideBar(find);
+          i.previousElementSibling.classList.remove('bg-red-500','opacity-25','animate-pulse');
+      }else if(i===btnStaff){
+        let filtred = dataBase;
+        let find = filtred.find(obj => obj.id === id).name;
+        i.previousElementSibling.innerHTML+=`
+          <div
+              id="profile"
+              class="relative flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-44 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
+            >
+              <span onclick="999" class="absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
+              <div>
+                <h2 class="font-bold">${dataBase[id].name}</h2>
+                <p class="text-gray-400 text-sm">Staff Room</p>
+              </div>
+          </div>`
+          deleteFromSideBar(find);
+      }else if(i===btnVault){
+        let filtred = dataBase.filter(i=> i.role === "Manager");
+        let find = filtred.find(obj => obj.id === id).name;
+        i.previousElementSibling.innerHTML+=`
+          <div
+              id="profile"
+              class="relative flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-44 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
+            >
+              <span onclick="999" class="absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
+              <div>
+                <h2 class="font-bold">${find}</h2>
+                <p class="text-gray-400 text-sm">Vault</p>
+              </div>
+          </div>`
+        deleteFromSideBar(find);
+        i.previousElementSibling.classList.remove('bg-red-500','opacity-25','animate-pulse');
+      }
+  }
 
-}
-deleteBtn.addEventListener('click',function(){
-  
+[btnMeet,btnServers,btnSecurty,btnReception,btnStaff,btnVault].forEach(i=>{
+  i.addEventListener('click',function(){
+    staffModal.classList.remove('hidden');
+      if(i===btnMeet || i===btnStaff){
+        showDataInModal(dataBase);
+      }else if(i===btnServers){
+        let filtred = dataBase.filter(i=> i.role === "Servers" || i.role === "Manager")
+        showDataInModal(filtred);
+      }else if(i===btnSecurty){
+        let filtred = dataBase.filter(i=> i.role === "Security" || i.role === "Manager")
+        showDataInModal(filtred);
+      }else if(i===btnReception){
+        let filtred = dataBase.filter(i=> i.role === "Receptionist" || i.role === "Manager")
+        showDataInModal(filtred);
+      }else if(i===btnVault){
+        let filtred = dataBase.filter(i=> i.role === "Manager")
+        showDataInModal(filtred);
+      }
+  })
 })
+//Delete Staff From Room
