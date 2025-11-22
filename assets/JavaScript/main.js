@@ -387,9 +387,10 @@ function showDataInModal(filtred) {
   }
 }
 function deleteFromSideBar(find) {
-  dataBase.splice(dataBase.indexOf(find), 1);
-  localStorage.profile = JSON.stringify(dataBase);
-  showData();
+  // dataBase.splice(dataBase.indexOf(find), 1);
+  // localStorage.profile = JSON.stringify(dataBase);
+  // showData();
+console.log(document.getElementById(find.id))
 }
 let activeButton = null;
 btnMeet.onclick = () => (activeButton = btnMeet);
@@ -415,6 +416,11 @@ function addProfile(e, id) {
                 <p class="text-gray-400 text-sm">Conference Room</p>
               </div>
           </div>`;
+          let deleteBtn = document.getElementById(id);
+          deleteBtn.addEventListener('click',function(e){
+            e.stopPropagation();
+            deleteBtn.parentNode.remove();
+          })
     deleteFromSideBar(find);
   } else if (i === btnServers) {
     let filtred = dataBase.filter(
@@ -426,12 +432,17 @@ function addProfile(e, id) {
               id="profile"
               class="relative flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-44 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
             >
-              <span onclick="999" class="X absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
+              <span id="${id}" class="X absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
               <div>
                 <h2 class="font-bold">${find}</h2>
                 <p class="text-gray-400 text-sm">Servers Room</p>
               </div>
           </div>`;
+          let deleteBtn = document.getElementById(id);
+          deleteBtn.addEventListener('click',function(e){
+            e.stopPropagation();
+            deleteBtn.parentNode.remove();
+          })
     deleteFromSideBar(find);
     i.previousElementSibling.classList.remove(
       "bg-red-500",
@@ -448,12 +459,17 @@ function addProfile(e, id) {
               id="profile"
               class="relative flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-44 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
             >
-              <span onclick="999" class="X absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
+              <span id="${id}" class="X absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
               <div>
                 <h2 class="font-bold">${find}</h2>
                 <p class="text-gray-400 text-sm">Security Room</p>
               </div>
           </div>`;
+          let deleteBtn = document.getElementById(id);
+          deleteBtn.addEventListener('click',function(e){
+            e.stopPropagation();
+            deleteBtn.parentNode.remove();
+          })
     deleteFromSideBar(find);
     i.previousElementSibling.classList.remove(
       "bg-red-500",
@@ -470,12 +486,17 @@ function addProfile(e, id) {
               id="profile"
               class="relative flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-44 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
             >
-              <span onclick="999" class="X absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
+              <span id="${id}" class="X absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
               <div>
                 <h2 class="font-bold">${find}</h2>
                 <p class="text-gray-400 text-sm">Reception Room</p>
               </div>
           </div>`;
+          let deleteBtn = document.getElementById(id);
+          deleteBtn.addEventListener('click',function(e){
+            e.stopPropagation();
+            deleteBtn.parentNode.remove();
+          })
     deleteFromSideBar(find);
     i.previousElementSibling.classList.remove(
       "bg-red-500",
@@ -484,33 +505,45 @@ function addProfile(e, id) {
     );
   } else if (i === btnStaff) {
     let filtred = dataBase;
-    let find = filtred.find((obj) => obj.id === id).name;
+    let find = filtred.find((obj) => obj.id === id);
     i.previousElementSibling.innerHTML += `
           <div
               id="profile"
               class="relative flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-44 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
             >
-              <span onclick="999" class="X absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
+              <span id="${id}" class="X absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
               <div>
-                <h2 class="font-bold">${dataBase[id].name}</h2>
-                <p class="text-gray-400 text-sm">Staff Room</p>
+                <h2 class="font-bold">${find.name}</h2>
+                <p class="text-gray-400 text-sm">Conference Room</p>
               </div>
           </div>`;
+          let deleteBtn = document.getElementById(id);
+          deleteBtn.addEventListener('click',function(e){
+            e.stopPropagation();
+            deleteBtn.parentNode.remove();
+          })
     deleteFromSideBar(find);
   } else if (i === btnVault) {
-    let filtred = dataBase.filter((i) => i.role === "Manager");
+    let filtred = dataBase.filter(
+      (i) => i.role === "Manager"
+    );
     let find = filtred.find((obj) => obj.id === id).name;
     i.previousElementSibling.innerHTML += `
           <div
               id="profile"
               class="relative flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-44 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
             >
-              <span onclick="999" class="X absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
+              <span id="${id}" class="X absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
               <div>
                 <h2 class="font-bold">${find}</h2>
-                <p class="text-gray-400 text-sm">Vault</p>
+                <p class="text-gray-400 text-sm">Reception Room</p>
               </div>
           </div>`;
+          let deleteBtn = document.getElementById(id);
+          deleteBtn.addEventListener('click',function(e){
+            e.stopPropagation();
+            deleteBtn.parentNode.remove();
+          })
     deleteFromSideBar(find);
     i.previousElementSibling.classList.remove(
       "bg-red-500",
