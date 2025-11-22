@@ -581,4 +581,3 @@ function addProfile(e, id) {
     });
   }
 );
-//Delete Staff From Room
