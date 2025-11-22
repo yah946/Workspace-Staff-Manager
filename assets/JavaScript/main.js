@@ -125,18 +125,15 @@ removeExperience.addEventListener("click", function () {
 // });
 const img = document.getElementById("img");
 //End of uploadImage
-urlInput.addEventListener('input',function(){
-  if(urlInput.value ===''){
+urlInput.addEventListener("input", function () {
+  if (urlInput.value === "") {
     // img.src = '';
-    document.getElementById('image-label').style.opacity = "100%";
-  }
-  else{
+    document.getElementById("image-label").style.opacity = "100%";
+  } else {
     img.src = urlInput.value;
-    document.getElementById('image-label').style.opacity = "0%";
+    document.getElementById("image-label").style.opacity = "0%";
   }
-
-})
-
+});
 
 const container = document.getElementById("container");
 const nameInput = document.getElementById("name-input");
@@ -170,6 +167,7 @@ function showData() {
               <p class="text-gray-400">${dataBase[i].role}</p>
             </div>
             <div class="pointer-events-auto flex gap-2">
+                
                 <span onclick="editProfile(event,${i})" class="pointer-events-auto active:border-2 active:border-black border-2 border-yellow-400 bg-yellow-400 p-1 rounded-lg inline-block text-transparent bg-clip-text"><i class="pointer-events-auto fa-solid fa-pen"></i></span>
                 <span onclick="deleteData(event,${i})" class="pointer-events-auto active:border-2 active:border-black border-2 border-red-400 bg-red-400 p-1 rounded-lg inline-block text-transparent bg-clip-text"><i class="pointer-events-auto fa-solid fa-trash"></i></span>
             </div>
@@ -295,7 +293,7 @@ function validateForm() {
 
 //Edit
 const edit = document.querySelectorAll(".edit");
-function editProfile(e,i) {
+function editProfile(e, i) {
   e.stopPropagation();
   modal.classList.remove("hidden");
   nameInput.value = dataBase[i].name;
@@ -313,7 +311,7 @@ function editProfile(e,i) {
   imageInput.nextElementSibling.style.opacity = "0%";
 }
 //Delete
-function deleteData(e,i) {
+function deleteData(e, i) {
   e.stopPropagation();
   Swal.fire({
     title: "Are you sure?",
@@ -364,9 +362,9 @@ function allInfo(i) {
   document.getElementById("c").innerHTML = work;
 }
 // Put Staff In the Best Room
-function showDataInModal(filtred){
-  displayCards.innerHTML= '';
-  for(let i = 0 ; i<filtred.length ; i++){
+function showDataInModal(filtred) {
+  displayCards.innerHTML = "";
+  for (let i = 0; i < filtred.length; i++) {
     displayCards.innerHTML += `<div id-index = "${filtred[i].id}"
             id="profile"
             onclick="allInfo(${i})"
@@ -388,136 +386,166 @@ function showDataInModal(filtred){
           </div>`;
   }
 }
-function deleteFromSideBar(find){
-  dataBase.splice(dataBase.indexOf(find),1);
+function deleteFromSideBar(find) {
+  dataBase.splice(dataBase.indexOf(find), 1);
   localStorage.profile = JSON.stringify(dataBase);
   showData();
 }
 let activeButton = null;
-btnMeet.onclick = () => activeButton = btnMeet;
-btnServers.onclick = () => activeButton = btnServers;
-btnSecurty.onclick = () => activeButton = btnSecurty;
-btnReception.onclick = () => activeButton = btnReception;
-btnStaff.onclick = () => activeButton = btnStaff;
-btnVault.onclick = () => activeButton = btnVault;
-function addProfile(e,id){
+btnMeet.onclick = () => (activeButton = btnMeet);
+btnServers.onclick = () => (activeButton = btnServers);
+btnSecurty.onclick = () => (activeButton = btnSecurty);
+btnReception.onclick = () => (activeButton = btnReception);
+btnStaff.onclick = () => (activeButton = btnStaff);
+btnVault.onclick = () => (activeButton = btnVault);
+function addProfile(e, id) {
   e.stopPropagation();
   const i = activeButton;
-  if(i===btnMeet){
-        let filtred = dataBase;
-        let find = filtred.find(obj => obj.id === id);
-        i.previousElementSibling.innerHTML+=`
+  if (i === btnMeet) {
+    let filtred = dataBase;
+    let find = filtred.find((obj) => obj.id === id);
+    i.previousElementSibling.innerHTML += `
           <div
               id="profile"
               class="relative flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-44 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
             >
-              <span class="XM absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
+              <span id="${id}" class="X absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
               <div>
                 <h2 class="font-bold">${find.name}</h2>
                 <p class="text-gray-400 text-sm">Conference Room</p>
               </div>
-          </div>`
-        deleteFromSideBar(find);
-      }else if(i===btnServers){
-        let filtred = dataBase.filter(i=> i.role === "Servers" || i.role === "Manager");
-        let find = filtred.find(obj => obj.id === id).name;
-        i.previousElementSibling.innerHTML+=`
+          </div>`;
+    deleteFromSideBar(find);
+  } else if (i === btnServers) {
+    let filtred = dataBase.filter(
+      (i) => i.role === "IT Guy" || i.role === "Manager"
+    );
+    let find = filtred.find((obj) => obj.id === id).name;
+    i.previousElementSibling.innerHTML += `
           <div
               id="profile"
               class="relative flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-44 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
             >
-              <span onclick="999" class="absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
+              <span onclick="999" class="X absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
               <div>
                 <h2 class="font-bold">${find}</h2>
                 <p class="text-gray-400 text-sm">Servers Room</p>
               </div>
-          </div>`
-        deleteFromSideBar(find);
-          i.previousElementSibling.classList.remove('bg-red-500','opacity-25','animate-pulse');
-      }else if(i===btnSecurty){
-        let filtred = dataBase.filter(i=> i.role === "Security" || i.role === "Manager");
-        let find = filtred.find(obj => obj.id === id).name;
-        i.previousElementSibling.innerHTML+=`
+          </div>`;
+    deleteFromSideBar(find);
+    i.previousElementSibling.classList.remove(
+      "bg-red-500",
+      "opacity-25",
+      "animate-pulse"
+    );
+  } else if (i === btnSecurty) {
+    let filtred = dataBase.filter(
+      (i) => i.role === "Security" || i.role === "Manager"
+    );
+    let find = filtred.find((obj) => obj.id === id).name;
+    i.previousElementSibling.innerHTML += `
           <div
               id="profile"
               class="relative flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-44 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
             >
-              <span onclick="999" class="absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
+              <span onclick="999" class="X absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
               <div>
                 <h2 class="font-bold">${find}</h2>
                 <p class="text-gray-400 text-sm">Security Room</p>
               </div>
-          </div>`
-        deleteFromSideBar(find);
-          i.previousElementSibling.classList.remove('bg-red-500','opacity-25','animate-pulse');
-      }else if(i===btnReception){
-        let filtred = dataBase.filter(i=> i.role === "Receptionist" || i.role === "Manager");
-        let find = filtred.find(obj => obj.id === id).name;
-        i.previousElementSibling.innerHTML+=`
+          </div>`;
+    deleteFromSideBar(find);
+    i.previousElementSibling.classList.remove(
+      "bg-red-500",
+      "opacity-25",
+      "animate-pulse"
+    );
+  } else if (i === btnReception) {
+    let filtred = dataBase.filter(
+      (i) => i.role === "Receptionist" || i.role === "Manager"
+    );
+    let find = filtred.find((obj) => obj.id === id).name;
+    i.previousElementSibling.innerHTML += `
           <div
               id="profile"
               class="relative flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-44 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
             >
-              <span onclick="999" class="absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
+              <span onclick="999" class="X absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
               <div>
                 <h2 class="font-bold">${find}</h2>
                 <p class="text-gray-400 text-sm">Reception Room</p>
               </div>
-          </div>`
-          deleteFromSideBar(find);
-          i.previousElementSibling.classList.remove('bg-red-500','opacity-25','animate-pulse');
-      }else if(i===btnStaff){
-        let filtred = dataBase;
-        let find = filtred.find(obj => obj.id === id).name;
-        i.previousElementSibling.innerHTML+=`
+          </div>`;
+    deleteFromSideBar(find);
+    i.previousElementSibling.classList.remove(
+      "bg-red-500",
+      "opacity-25",
+      "animate-pulse"
+    );
+  } else if (i === btnStaff) {
+    let filtred = dataBase;
+    let find = filtred.find((obj) => obj.id === id).name;
+    i.previousElementSibling.innerHTML += `
           <div
               id="profile"
               class="relative flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-44 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
             >
-              <span onclick="999" class="absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
+              <span onclick="999" class="X absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
               <div>
                 <h2 class="font-bold">${dataBase[id].name}</h2>
                 <p class="text-gray-400 text-sm">Staff Room</p>
               </div>
-          </div>`
-          deleteFromSideBar(find);
-      }else if(i===btnVault){
-        let filtred = dataBase.filter(i=> i.role === "Manager");
-        let find = filtred.find(obj => obj.id === id).name;
-        i.previousElementSibling.innerHTML+=`
+          </div>`;
+    deleteFromSideBar(find);
+  } else if (i === btnVault) {
+    let filtred = dataBase.filter((i) => i.role === "Manager");
+    let find = filtred.find((obj) => obj.id === id).name;
+    i.previousElementSibling.innerHTML += `
           <div
               id="profile"
               class="relative flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-44 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
             >
-              <span onclick="999" class="absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
+              <span onclick="999" class="X absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
               <div>
                 <h2 class="font-bold">${find}</h2>
                 <p class="text-gray-400 text-sm">Vault</p>
               </div>
-          </div>`
-        deleteFromSideBar(find);
-        i.previousElementSibling.classList.remove('bg-red-500','opacity-25','animate-pulse');
-      }
+          </div>`;
+    deleteFromSideBar(find);
+    i.previousElementSibling.classList.remove(
+      "bg-red-500",
+      "opacity-25",
+      "animate-pulse"
+    );
   }
+}
 
-[btnMeet,btnServers,btnSecurty,btnReception,btnStaff,btnVault].forEach(i=>{
-  i.addEventListener('click',function(){
-    staffModal.classList.remove('hidden');
-      if(i===btnMeet || i===btnStaff){
+[btnMeet, btnServers, btnSecurty, btnReception, btnStaff, btnVault].forEach(
+  (i) => {
+    i.addEventListener("click", function () {
+      staffModal.classList.remove("hidden");
+      if (i === btnMeet || i === btnStaff) {
         showDataInModal(dataBase);
-      }else if(i===btnServers){
-        let filtred = dataBase.filter(i=> i.role === "Servers" || i.role === "Manager")
+      } else if (i === btnServers) {
+        let filtred = dataBase.filter(
+          (i) => i.role === "IT Guy" || i.role === "Manager"
+        );
         showDataInModal(filtred);
-      }else if(i===btnSecurty){
-        let filtred = dataBase.filter(i=> i.role === "Security" || i.role === "Manager")
+      } else if (i === btnSecurty) {
+        let filtred = dataBase.filter(
+          (i) => i.role === "Security" || i.role === "Manager"
+        );
         showDataInModal(filtred);
-      }else if(i===btnReception){
-        let filtred = dataBase.filter(i=> i.role === "Receptionist" || i.role === "Manager")
+      } else if (i === btnReception) {
+        let filtred = dataBase.filter(
+          (i) => i.role === "Receptionist" || i.role === "Manager"
+        );
         showDataInModal(filtred);
-      }else if(i===btnVault){
-        let filtred = dataBase.filter(i=> i.role === "Manager")
+      } else if (i === btnVault) {
+        let filtred = dataBase.filter((i) => i.role === "Manager");
         showDataInModal(filtred);
       }
-  })
-})
+    });
+  }
+);
 //Delete Staff From Room
