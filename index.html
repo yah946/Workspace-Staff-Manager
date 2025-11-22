@@ -137,7 +137,7 @@
               class="hidden"
             />
             <label
-              for="image-input"
+              for="image-input" id="image-label"
               class="block w-24 h-24 rounded-[50%] py-6 text-center cursor-pointer border-gray-300 border-2"
               >Upload Image</label
             >
@@ -260,10 +260,10 @@
               style="z-index: 99;"
               class="relative flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-44 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
             >
-              <span class="absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center hover:size-5"><i class="fa-solid fa-xmark"></i></span>
+              <span class="absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
               <div>
-                <h2 class="font-bold">${filtredDatabase[i].name}</h2>
-                <p class="text-gray-400">${filtredDatabase[i].role}</p>
+                <h2 class="font-bold">Mohamed Sehrane</h2>
+                <p class="text-gray-400 text-sm">Conference Room</p>
               </div>
           </div> -->
         </div>
@@ -283,7 +283,7 @@
         <p style="text-shadow: 1px 1px 10px white, -1px -1px 10px white" class="absolute">
           Servers Room
         </p>
-        <div id="first-rest-room" style="scrollbar-width: thin; scrollbar-color: #98ae47 #bb9266" class="w-[190px] h-[158px] bg-red-500 opacity-25 overflow-auto">
+        <div id="first-rest-room" style="scrollbar-width: thin; scrollbar-color: #98ae47 #bb9266" class="w-[190px] h-[158px] bg-red-500 opacity-25 animate-pulse overflow-auto"><span></span>
 
         </div>
         <button
@@ -302,7 +302,7 @@
         <p style="text-shadow: 1px 1px 10px white, -1px -1px 10px white" class="absolute">
           Security Room
         </p>
-        <div id="second-rest-room" style="scrollbar-width: thin; scrollbar-color: #98ae47 #bb9266" class="w-[190px] h-[158px] bg-red-500 opacity-25 overflow-auto">
+        <div id="second-rest-room" style="scrollbar-width: thin; scrollbar-color: #98ae47 #bb9266" class="w-[190px] h-[158px] bg-red-500 opacity-25 animate-pulse overflow-auto">
 
         </div>
         <button
@@ -321,7 +321,7 @@
         <p style="text-shadow: 1px 1px 10px white, -1px -1px 10px white" class="absolute">
           Reception
         </p>
-        <div id="third-rest-room" class="w-[325px] h-[315px] bg-red-500 opacity-25 overflow-auto">
+        <div id="third-rest-room" class="w-[325px] h-[315px] bg-red-500 opacity-25 animate-pulse overflow-auto">
 
         </div>
         <button
@@ -359,7 +359,7 @@
         <p style="text-shadow: 1px 1px 10px white, -1px -1px 10px white" class="absolute">
           Vault
         </p>
-        <div style="scrollbar-width: thin; scrollbar-color: #98ae47 #bb9266" class="w-[190px] h-[155px] bg-red-500 opacity-25 overflow-auto">
+        <div id="first-rest-room" style="scrollbar-width: thin; scrollbar-color: #98ae47 #bb9266" class="w-[190px] h-[158px] bg-red-500 opacity-25 animate-pulse overflow-auto"><span></span>
 
         </div>
         <button
