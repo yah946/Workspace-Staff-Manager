@@ -109,7 +109,7 @@ removeExperience.addEventListener("click", function () {
   return count;
 });
 // uploadimage
-// const imageInput = document.getElementById("image-input");
+const imageInput = document.getElementById("image-input");
 // imageInput.addEventListener("change", function (e) {
 //   urlInput.disabled = true;
 //   urlInput.classList.add("cursor-not-allowed");
@@ -175,15 +175,15 @@ function showData() {
   }
   container.innerHTML = table;
 }
-const companyInput = document.getElementsByClassName("company-input");
-const roleInput = document.getElementsByClassName("role-ex-input");
-const dateFrom = document.getElementsByClassName("date-f-input");
-const dateTo = document.getElementsByClassName("date-t-input");
 const profileId = document.getElementsByClassName("#profile");
 saveBtn.addEventListener("click", function () {
-  // if (!validateForm()) {
-  //   return;
-  // }
+  const companysInput = document.querySelectorAll(".company-input");
+  const rolesInput = document.querySelectorAll(".role-ex-input");
+  const datesFrom = document.querySelectorAll(".date-f-input");
+  const datesTo = document.querySelectorAll(".date-t-input");
+  if (!validateForm()) {
+    return;
+  }
   // Save new profiles to localStorage
   let newProfile = {
     id: Math.random(),
@@ -193,22 +193,36 @@ saveBtn.addEventListener("click", function () {
     email: emailInput.value,
     tel: phoneInput.value,
     experiences: {
-      company: companyInput.value,
-      role: roleInput.value,
-      from: dateFrom.value,
-      to: dateTo.value,
+      company: [],
+      role: [],
+      from: [],
+      to: [],
     },
     localisation: "Unassigned",
     sideBar: true,
   };
-  if (dateFrom.value > dateTo.value) {
-    document.getElementById("date-f-input-error").textContent = "Impossible !!";
-    roleInput.value = dataBase[i].experiences.role;
-    dateFrom.value = dataBase[i].experiences.from;
-  } else {
-    modal.classList.add("hidden");
-    document.getElementById("date-f-input-error").textContent = "";
+  for (let input of companysInput){
+    newProfile.experiences.company.push(input.value);
   }
+  for (let input of rolesInput){
+    newProfile.experiences.role.push(input.value);
+  }
+  for (let input of datesFrom){
+    newProfile.experiences.from.push(input.value);
+  }
+  for (let input of datesTo){
+    newProfile.experiences.to.push(input.value);
+  }
+  // for (let i = 0 ; i < newProfile.experiences.from.length ;i++){
+  //   if (datesFrom[i].value > datesTo[i].value) {
+  //     document.getElementById("date-f-input-error").textContent = "Impossible !!";
+  //     console.log('Helo wolrd')
+  //     return;
+  //   } else {
+  //     modal.classList.add("hidden");
+  //     document.getElementById("date-f-input-error").textContent = "";
+  //   }
+  // }
   if (changeModal === "Save Worker") {
     dataBase.push(newProfile);
   } else {
@@ -224,6 +238,7 @@ saveBtn.addEventListener("click", function () {
     inputs[i].value = "";
   }
   img.src = "";
+  modal.classList.add("hidden");
 });
 showData();
 //validation
@@ -237,7 +252,7 @@ const patterns = {
     message: "You must choose a role",
   },
   "url-input": {
-    regex: /^[A-Za-z0-9.-]+\.[A-Za-z]{2,5}$/,
+    regex: /[A-Za-z0-9.-]+\.[A-Za-z]{2,5}[\w\/.\-]{2,}/,
     message: "Enter a valid url",
   },
   "company-input": {
@@ -295,16 +310,20 @@ function validateForm() {
 const edit = document.querySelectorAll(".edit");
 function editProfile(e, i) {
   e.stopPropagation();
+  const companysInput = document.querySelectorAll(".company-input");
+  const rolesInput = document.querySelectorAll(".role-ex-input");
+  const datesFrom = document.querySelectorAll(".date-f-input");
+  const datesTo = document.querySelectorAll(".date-t-input");
   modal.classList.remove("hidden");
   nameInput.value = dataBase[i].name;
   roleOpt.value = dataBase[i].role;
   img.src = dataBase[i].img;
   emailInput.value = dataBase[i].email;
   phoneInput.value = dataBase[i].tel;
-  companyInput.value = dataBase[i].experiences.company;
-  roleInput.value = dataBase[i].experiences.role;
-  dateFrom.value = dataBase[i].experiences.from;
-  dateTo.value = dataBase[i].experiences.to;
+  companysInput.forEach(c => dataBase[i].experiences.c);
+  rolesInput.forEach(r=>dataBase[i].experiences.r);
+  datesFrom.forEach(f=>dataBase[i].experiences.f);
+  datesTo.forEach(to => dataBase[i].experiences.to);
   saveBtn.textContent = "Edit Profile";
   changeModal = "Edit Profile";
   tmp = i;
