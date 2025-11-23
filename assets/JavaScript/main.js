@@ -150,9 +150,14 @@ if (localStorage.profile != null) {
 }
 function showData() {
   let table = "";
+  console.log(dataBase)
+  container.innerHTML = "";
   for (let i = 0; i < dataBase.length; i++) {
+    console.log(dataBase[i].sideBar)
+    if(dataBase[i].sideBar){
+      console.log("abdelilah")
     table += `<div id-index = "${dataBase[i].id}"
-            id="profile"
+            id="profile-${dataBase[i].id}"
             onclick="allInfo(${i})"
             class="compt flex justify-evenly gap-2 items-center border border-gray-300 bg-[#f9f9fb] p-3 w-64 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
           >
@@ -172,8 +177,11 @@ function showData() {
                 <span onclick="deleteData(event,${i})" class="pointer-events-auto active:border-2 active:border-black border-2 border-red-400 bg-red-400 p-1 rounded-lg inline-block text-transparent bg-clip-text"><i class="pointer-events-auto fa-solid fa-trash"></i></span>
             </div>
           </div>`;
-  }
   container.innerHTML = table;
+  }else{
+    
+  }
+}
 }
 const profileId = document.getElementsByClassName("#profile");
 saveBtn.addEventListener("click", function () {
@@ -409,7 +417,11 @@ function deleteFromSideBar(find) {
   // dataBase.splice(dataBase.indexOf(find), 1);
   // localStorage.profile = JSON.stringify(dataBase);
   // showData();
-console.log(document.getElementById(find.id))
+
+  console.log("delete last ",find.name)
+  Object.assign(find,{sideBar:false});
+  localStorage.profile = JSON.stringify(dataBase);
+  showData();
 }
 let activeButton = null;
 btnMeet.onclick = () => (activeButton = btnMeet);
@@ -429,39 +441,29 @@ function addProfile(e, id) {
               id="profile"
               class="relative flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-44 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
             >
-              <span id="${id}" class="X absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
+              <span id="${id}" onclick="deleteFromRoom(${id})" class="X absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
               <div>
                 <h2 class="font-bold">${find.name}</h2>
                 <p class="text-gray-400 text-sm">Conference Room</p>
               </div>
           </div>`;
-          let deleteBtn = document.getElementById(id);
-          deleteBtn.addEventListener('click',function(e){
-            e.stopPropagation();
-            deleteBtn.parentNode.remove();
-          })
     deleteFromSideBar(find);
   } else if (i === btnServers) {
     let filtred = dataBase.filter(
       (i) => i.role === "IT Guy" || i.role === "Manager"
     );
-    let find = filtred.find((obj) => obj.id === id).name;
+    let find = filtred.find((obj) => obj.id === id);
     i.previousElementSibling.innerHTML += `
           <div
               id="profile"
               class="relative flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-44 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
             >
-              <span id="${id}" class="X absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
+              <span id="${id}" onclick="deleteFromRoom(${id})"  class="X absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
               <div>
-                <h2 class="font-bold">${find}</h2>
+                <h2 class="font-bold">${find.name}</h2>
                 <p class="text-gray-400 text-sm">Servers Room</p>
               </div>
           </div>`;
-          let deleteBtn = document.getElementById(id);
-          deleteBtn.addEventListener('click',function(e){
-            e.stopPropagation();
-            deleteBtn.parentNode.remove();
-          })
     deleteFromSideBar(find);
     i.previousElementSibling.classList.remove(
       "bg-red-500",
@@ -472,23 +474,18 @@ function addProfile(e, id) {
     let filtred = dataBase.filter(
       (i) => i.role === "Security" || i.role === "Manager"
     );
-    let find = filtred.find((obj) => obj.id === id).name;
+    let find = filtred.find((obj) => obj.id === id);
     i.previousElementSibling.innerHTML += `
           <div
               id="profile"
               class="relative flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-44 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
             >
-              <span id="${id}" class="X absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
+              <span id="${id}" onclick="deleteFromRoom(${id})"  class="X absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
               <div>
-                <h2 class="font-bold">${find}</h2>
+                <h2 class="font-bold">${find.name}</h2>
                 <p class="text-gray-400 text-sm">Security Room</p>
               </div>
           </div>`;
-          let deleteBtn = document.getElementById(id);
-          deleteBtn.addEventListener('click',function(e){
-            e.stopPropagation();
-            deleteBtn.parentNode.remove();
-          })
     deleteFromSideBar(find);
     i.previousElementSibling.classList.remove(
       "bg-red-500",
@@ -499,23 +496,18 @@ function addProfile(e, id) {
     let filtred = dataBase.filter(
       (i) => i.role === "Receptionist" || i.role === "Manager"
     );
-    let find = filtred.find((obj) => obj.id === id).name;
+    let find = filtred.find((obj) => obj.id === id);
     i.previousElementSibling.innerHTML += `
           <div
               id="profile"
               class="relative flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-44 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
             >
-              <span id="${id}" class="X absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
+              <span id="${id}" onclick="deleteFromRoom(${id})"  class="X absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
               <div>
-                <h2 class="font-bold">${find}</h2>
+                <h2 class="font-bold">${find.name}</h2>
                 <p class="text-gray-400 text-sm">Reception Room</p>
               </div>
           </div>`;
-          let deleteBtn = document.getElementById(id);
-          deleteBtn.addEventListener('click',function(e){
-            e.stopPropagation();
-            deleteBtn.parentNode.remove();
-          })
     deleteFromSideBar(find);
     i.previousElementSibling.classList.remove(
       "bg-red-500",
@@ -530,39 +522,29 @@ function addProfile(e, id) {
               id="profile"
               class="relative flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-44 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
             >
-              <span id="${id}" class="X absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
+              <span id="${id}" onclick="deleteFromRoom(${id})"  class="X absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
               <div>
                 <h2 class="font-bold">${find.name}</h2>
                 <p class="text-gray-400 text-sm">Conference Room</p>
               </div>
           </div>`;
-          let deleteBtn = document.getElementById(id);
-          deleteBtn.addEventListener('click',function(e){
-            e.stopPropagation();
-            deleteBtn.parentNode.remove();
-          })
     deleteFromSideBar(find);
   } else if (i === btnVault) {
     let filtred = dataBase.filter(
       (i) => i.role === "Manager"
     );
-    let find = filtred.find((obj) => obj.id === id).name;
+    let find = filtred.find((obj) => obj.id === id);
     i.previousElementSibling.innerHTML += `
           <div
               id="profile"
               class="relative flex justify-evenly items-center border border-gray-300 bg-[#f9f9fb] p-3 w-44 rounded-lg m-2 cursor-pointer mt-3 duration-300 hover:-translate-y-1 hover:shadow-[0px_6px_6px_1px_rgba(0,_0,_0,_0.1)]"
             >
-              <span id="${id}" class="X absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
+              <span id="${id}" onclick="deleteFromRoom(${id})"  class="X absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
               <div>
-                <h2 class="font-bold">${find}</h2>
+                <h2 class="font-bold">${find.name}</h2>
                 <p class="text-gray-400 text-sm">Reception Room</p>
               </div>
           </div>`;
-          let deleteBtn = document.getElementById(id);
-          deleteBtn.addEventListener('click',function(e){
-            e.stopPropagation();
-            deleteBtn.parentNode.remove();
-          })
     deleteFromSideBar(find);
     i.previousElementSibling.classList.remove(
       "bg-red-500",
@@ -577,26 +559,36 @@ function addProfile(e, id) {
     i.addEventListener("click", function () {
       staffModal.classList.remove("hidden");
       if (i === btnMeet || i === btnStaff) {
-        showDataInModal(dataBase);
+        filtred = dataBase.filter(i=> i.sideBar==true);
+        showDataInModal(filtred);
       } else if (i === btnServers) {
         let filtred = dataBase.filter(
-          (i) => i.role === "IT Guy" || i.role === "Manager"
+          (i) => i.role === "IT Guy" && i.sideBar===true || i.role === "Manager" && i.sideBar===true
         );
         showDataInModal(filtred);
       } else if (i === btnSecurty) {
         let filtred = dataBase.filter(
-          (i) => i.role === "Security" || i.role === "Manager"
+          (i) => i.role === "Security" && i.sideBar===true || i.role === "Manager" && i.sideBar===true
         );
         showDataInModal(filtred);
       } else if (i === btnReception) {
         let filtred = dataBase.filter(
-          (i) => i.role === "Receptionist" || i.role === "Manager"
+          (i) => i.role === "Receptionist" && i.sideBar===true || i.role === "Manager" && i.sideBar===true
         );
         showDataInModal(filtred);
       } else if (i === btnVault) {
-        let filtred = dataBase.filter((i) => i.role === "Manager");
+        let filtred = dataBase.filter((i) => i.role === "Manager" && i.sideBar===true);
         showDataInModal(filtred);
       }
     });
   }
 );
+
+function deleteFromRoom(id){
+  let find  = dataBase.find(database => database.id == id)
+  let deleteBtn = document.getElementById(find.id);
+  deleteBtn.parentNode.remove();
+  find.sideBar=true;
+  localStorage.profile = JSON.stringify(dataBase);
+  showData();
+}
