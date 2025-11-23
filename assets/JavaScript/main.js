@@ -430,6 +430,8 @@ btnSecurty.onclick = () => (activeButton = btnSecurty);
 btnReception.onclick = () => (activeButton = btnReception);
 btnStaff.onclick = () => (activeButton = btnStaff);
 btnVault.onclick = () => (activeButton = btnVault);
+// Counter
+let zone = [0,0,0,0];
 function addProfile(e, id) {
   e.stopPropagation();
   const i = activeButton;
@@ -449,6 +451,7 @@ function addProfile(e, id) {
           </div>`;
     deleteFromSideBar(find);
   } else if (i === btnServers) {
+    zone[0]++;
     let filtred = dataBase.filter(
       (i) => i.role === "IT Guy" || i.role === "Manager"
     );
@@ -471,6 +474,7 @@ function addProfile(e, id) {
       "animate-pulse"
     );
   } else if (i === btnSecurty) {
+    zone[1]++;
     let filtred = dataBase.filter(
       (i) => i.role === "Security" || i.role === "Manager"
     );
@@ -493,6 +497,7 @@ function addProfile(e, id) {
       "animate-pulse"
     );
   } else if (i === btnReception) {
+    zone[2]++;
     let filtred = dataBase.filter(
       (i) => i.role === "Receptionist" || i.role === "Manager"
     );
@@ -530,6 +535,7 @@ function addProfile(e, id) {
           </div>`;
     deleteFromSideBar(find);
   } else if (i === btnVault) {
+    zone[3]++;
     let filtred = dataBase.filter(
       (i) => i.role === "Manager"
     );
@@ -591,5 +597,43 @@ function deleteFromRoom(id){
   find.sideBar=true;
   localStorage.profile = JSON.stringify(dataBase);
   showData();
+  const i = activeButton;
+  if(i==btnServers ){
+    zone[0]--;
+    if(zone[0]==0){
+      i.previousElementSibling.classList.add(
+          "bg-red-500",
+          "opacity-25",
+          "animate-pulse"
+        );
+    }
+  }else if(i==btnSecurty){
+    zone[1]--;
+    if(zone[1]==0){
+      i.previousElementSibling.classList.add(
+          "bg-red-500",
+          "opacity-25",
+          "animate-pulse"
+        );
+    }
+  }else if(i==btnReception && zone){
+    zone[2]--;
+    if(zone[2]==0){
+      i.previousElementSibling.classList.add(
+          "bg-red-500",
+          "opacity-25",
+          "animate-pulse"
+        );
+    }
+  }else if(i==btnVault){
+    zone[3]--;
+    if(zone[3]==0){
+      i.previousElementSibling.classList.add(
+          "bg-red-500",
+          "opacity-25",
+          "animate-pulse"
+        );
+    }
+  }
 }
 //
