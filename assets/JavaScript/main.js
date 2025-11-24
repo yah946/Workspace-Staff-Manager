@@ -601,7 +601,7 @@ function addProfile(e, id) {
               <span id="${id}" onclick="deleteFromRoom(${id})"  class="X absolute top-0 right-0 inline-flex size-4 rounded-full bg-red-500 flex justify-center"><i class="fa-solid fa-xmark text-white"></i></span>
               <div>
                 <h2 class="font-bold">${find.name}</h2>
-                <p class="text-gray-400 text-sm">Reception Room</p>
+                <p class="text-gray-400 text-sm">Valut Room</p>
               </div>
           </div>`;
     deleteFromSideBar(find);
