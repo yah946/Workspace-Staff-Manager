@@ -22,6 +22,7 @@ let changeModal = "Save Worker";
 let tmp;
 // Open Model
 openModal.addEventListener("click", function () {
+  
   modal.classList.remove("hidden");
 });
 //Close Model
@@ -29,7 +30,13 @@ xMark3.addEventListener("click", function () {
   modalInfo.classList.add("hidden");
 });
 xMark.addEventListener("click", function () {
+    const inputs = document.querySelectorAll("input");
+
   modal.classList.add("hidden");
+    for (let i = 0; i < inputs.length; i++) {
+    inputs[i].value = "";
+  }
+  img.src = "";
 });
 xMark2.addEventListener("click", function () {
   staffModal.classList.add("hidden");
@@ -40,7 +47,6 @@ saveBtn.nextElementSibling.addEventListener("click", function () {
   for (let i = 0; i < inputs.length; i++) {
     inputs[i].value = "";
   }
-  img.src = "";
 });
 //Add new Experience fields
 let count = 1;
@@ -63,9 +69,9 @@ newExperience.addEventListener("click", function () {
               <input
                 id="role-ex-input"
                 type="text"
-                class="border border-gray-600 w-full py-1.5 rounded-lg"
+                class="role-ex-input border border-gray-600 w-full py-1.5 rounded-lg"
               />
-              <div id="role-ex-input role-ex-input-error"></div>
+              <div id=" role-ex-input-error"></div>
             </div>
             <div>
               <label for="date-f-input">From:</label>
@@ -140,7 +146,6 @@ const nameInput = document.getElementById("name-input");
 const emailInput = document.getElementById("email-input");
 const phoneInput = document.getElementById("phone-input");
 const roleOpt = document.getElementById("role-opt");
-const inputs = document.querySelectorAll("input");
 
 let dataBase = [];
 if (localStorage.profile != null) {
@@ -187,8 +192,10 @@ const profileId = document.getElementsByClassName("#profile");
 saveBtn.addEventListener("click", function () {
   const companysInput = document.querySelectorAll(".company-input");
   const rolesInput = document.querySelectorAll(".role-ex-input");
+  console.log(rolesInput)
   const datesFrom = document.querySelectorAll(".date-f-input");
   const datesTo = document.querySelectorAll(".date-t-input");
+  const inputs = document.querySelectorAll("input");
   if (!validateForm()) {
     return;
   }
@@ -214,6 +221,7 @@ saveBtn.addEventListener("click", function () {
   }
   for (let input of rolesInput){
     newProfile.experiences.role.push(input.value);
+    console.log("test")
   }
   for (let input of datesFrom){
     newProfile.experiences.from.push(input.value);
@@ -322,16 +330,61 @@ function editProfile(e, i) {
   const rolesInput = document.querySelectorAll(".role-ex-input");
   const datesFrom = document.querySelectorAll(".date-f-input");
   const datesTo = document.querySelectorAll(".date-t-input");
+  
   modal.classList.remove("hidden");
   nameInput.value = dataBase[i].name;
   roleOpt.value = dataBase[i].role;
-  img.src = dataBase[i].img;
+  urlInput.value = dataBase[i].img;
   emailInput.value = dataBase[i].email;
   phoneInput.value = dataBase[i].tel;
-  companysInput.forEach(c => dataBase[i].experiences.c);
-  rolesInput.forEach(r=>dataBase[i].experiences.r);
-  datesFrom.forEach(f=>dataBase[i].experiences.f);
-  datesTo.forEach(to => dataBase[i].experiences.to);
+  Experiences.innerHTML = "";
+  dataBase[i].experiences.company.forEach((exp,index)=>{
+    Experiences.innerHTML += `
+      <div class="mt-2 bg-[#f9f9fb] border border-gray-300 w-full py-1.5 rounded-lg p-2">
+            <div>
+              <label for="company-input">Company:</label>
+              <input
+                id="company-input"
+                type="text"
+                class="company-input border border-gray-600 w-full py-1.5 rounded-lg"
+                value="${exp}"
+              />
+              <div id="company-input-error"></div>
+            </div>
+            <div>
+              <label for="role-ex-input">Role:</label>
+              <input
+                id="role-ex-input"
+                type="text"
+                class="role-ex-input border border-gray-600 w-full py-1.5 rounded-lg"
+                value="${dataBase[i].experiences.role[index]}"
+              />
+              <div id="role-ex-input-error"></div>
+            </div>
+            <div>
+              <label for="date-f-input">From:</label>
+              <input
+                id="date-f-input"
+                type="date"
+                class="date-f-input border border-gray-600 w-full py-1.5 rounded-lg"
+                value="${dataBase[i].experiences.from[index]}"
+              />
+              <div id="date-f-input-error"></div>
+            </div>
+            <div>
+              <label for="date-t-input">To:</label>
+              <input
+                id="date-t-input"
+                type="date"
+                class="date-t-input border border-gray-600 w-full py-1.5 rounded-lg"
+                value="${dataBase[i].experiences.to[index]}"
+              />
+              <div id="date-t-input-error"></div>
+            </div>
+            </div>
+    `
+  })
+
   saveBtn.textContent = "Edit Profile";
   changeModal = "Edit Profile";
   tmp = i;
@@ -382,8 +435,8 @@ function allInfo(i) {
         <p class="font-bold">Work Experience</p>
         <div class="border shadow-md rounded-lg p-4">
           <p class="text-[#007afc] font-bold"></p>
-          <p class="text-gray-600"><span class="font-bold text-black">Role: </span></p>
-          <p class="text-gray-600"><span class="font-bold text-black">Period: </span></p>
+          <p class="text-gray-600"><span class="font-bold text-black">Role: </span>${dataBase[i].experiences.role[j]}</p>
+          <p class="text-gray-600"><span class="font-bold text-black">Period: </span>${dataBase[i].experiences.from[j]} - ${dataBase[i].experiences.from[j]}</p>
         </div>`;
   }
   document.getElementById("c").innerHTML = work;
@@ -636,4 +689,3 @@ function deleteFromRoom(id){
     }
   }
 }
-//
