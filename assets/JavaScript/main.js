@@ -133,7 +133,6 @@ const img = document.getElementById("img");
 //End of uploadImage
 urlInput.addEventListener("input", function () {
   if (urlInput.value === "") {
-    // img.src = '';
     document.getElementById("image-label").style.opacity = "100%";
   } else {
     img.src = urlInput.value;
@@ -335,6 +334,7 @@ function editProfile(e, i) {
   nameInput.value = dataBase[i].name;
   roleOpt.value = dataBase[i].role;
   urlInput.value = dataBase[i].img;
+  img.src = urlInput.value;
   emailInput.value = dataBase[i].email;
   phoneInput.value = dataBase[i].tel;
   Experiences.innerHTML = "";
